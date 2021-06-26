@@ -1,0 +1,12 @@
+@import "partials/utils/variables"; //utils : variables, fonctions, mixins//
+// @import "partials/utils/mixins";
+
+@import "partials/base/base"; //base : fondation du site//
+
+@import "partials/components/search-bar";  //components : blocs BEM indépendants//
+
+@import "partials/layout/header"; //layouts : blocs BEM//
+// @import "partials/layout/index-main";
+// @import "partials/layout/media-gallery";
+// @import "partials/layout/modal";
+// @import "partials/layout/lightbox";
