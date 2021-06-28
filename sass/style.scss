@@ -4,6 +4,8 @@
 @import "partials/base/base"; //base : fondation du site//
 
 @import "partials/components/search-bar";  //components : blocs BEM indépendants//
+@import "partials/components/selected-element";
+@import "partials/components/categories";
 
 @import "partials/layout/header"; //layouts : blocs BEM//
 // @import "partials/layout/index-main";

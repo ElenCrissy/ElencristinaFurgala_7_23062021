@@ -6,7 +6,7 @@
         <title>Les petits plats - Home page</title>
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link rel="stylesheet" href="/css/style.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
@@ -17,18 +17,37 @@
         <header role="banner" class="header">
             <img src="/images/Vector.svg" alt="logo" class="logo">
             <h1>Les petits plats</h1>
-            <div class="search-bar-container">
-                <div class="search-bar">
-                    <form method="get" action="traitement.php">
-                        <input type="text" name="search" value="Blabla..." id="search"/> 
-                        <!-- icon submit-->
-                    </form>
-                </div>
-            </div>
         </header>
 
         <main>
-            <section class="card-list"></section>
+            <section class="search-section">
+
+                <div class="search-bar-container">
+                    <div class="search-bar">
+                        <form method="get" action="traitement.php">
+                            <input type="text" name="search" placeholder="Rechercher un ingrédient, appareil, ustensile ou une recette" id="search"/>
+                        </form>
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+
+                <div class="selected-elements">
+                    <div class="selected-element">
+                        Coco
+                        <i class="far fa-times-circle"></i>
+                    </div>
+                </div>
+
+                <div class="categories">
+                    <div class="category">
+                        <form method="get" action="traitement.php">
+                            <input type="text" name="search" placeholder="Ingrédient" id="search-by"/>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cards-section"></section>
         </main>
 
         <script type="module" src="/src/index.js"></script>

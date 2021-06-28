@@ -1,0 +1,20 @@
+.categories{
+    display: flex;
+    & .category{
+        padding: 15PX;
+        display: inline-block;
+        width: 170px;
+    }
+    & form{
+        width: 100%;
+    }
+    & #search-by{
+        display: inline-block;
+        padding: 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: transparent;
+        width: 100%;
+        font-size: initial;
+    }
+}
