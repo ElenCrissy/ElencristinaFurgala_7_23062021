@@ -1,39 +1,52 @@
-// import {recipes} from '../recipes.js';
+import {recipes} from '../recipes.js';
+console.log(recipes)
 
-// const cardsSection = document.querySelector('.cards-section');
-// console.log(recipesArray);
+const cardsSection = document.querySelector('.cards-section');
 
-// createCategory(categoryName) {
-//     const category = document.createElement('div');
-//     const categoryForm = document.createElement('form');
-//     const categoryInput = document.createElement('input');
+const createCategory = (categoryName) => {
+    const category = document.createElement('div');
+    const categoryForm = document.createElement('form');
+    const categoryInput = document.createElement('input');
 
-//     category.classList.add('category');
-//     categoryForm.setAttribute('method', 'get');
-//     categoryForm.setAttribute('action', 'traitement.php');
-//     categoryInput.setAttribute('type', 'text');
-//     categoryInput.setAttribute('name', 'search');
-//     categoryInput.setAttribute('placeholder', `${category}`);
-//     categoryInput.setAttribute('id', `search-by-${category}`);
+    category.classList.add('category');
+    categoryForm.setAttribute('method', 'get');
+    categoryForm.setAttribute('action', 'traitement.php');
+    categoryInput.setAttribute('type', 'text');
+    categoryInput.setAttribute('name', 'search');
+    categoryInput.setAttribute('placeholder', `${categoryName}`);
+    categoryInput.setAttribute('id', 'search-by');
 
-//     if(category.toString() === 'Ingrédients') {
-//         category.style.backgroundColor = $colour-blue;
-//     } else if (category.toString() === 'Appareils') {
-//         category.style.backgroundColor = $colour-green;
-//     } else {
-//         category.style.backgroundColor = $colour-red;
-//     }
+    if(categoryName.toString() === 'Ingrédients') {
+        category.classList.add('ingredients');
+        categoryInput.classList.add('blue');
+    } else if (categoryName.toString() === 'Appareils') {
+        category.classList.add('appareils');
+        categoryInput.classList.add('green');
+    } else if (categoryName.toString() === 'Ustensiles') {
+        category.classList.add('ustensiles');
+        categoryInput.classList.add('red');
+    }
 
-//     categoryForm.appendChild(categoryInput);
-//     category.appendChild(categoryForm);
-// };
+    categoryForm.appendChild(categoryInput);
+    category.appendChild(categoryForm);
+    console.log(category)
 
-// generateCategories(container) {
-//     let categories = ['Ingrédients', 'Appareils', 'Ustensiles'];
-//     categories.forEach(category => container.appendChild(createCategory(category)));
-// };
+    return category;
+}
 
-// createRecipeCard(){
+const generateCategories = (container) => {
+    let categoriesNames = ['Ingrédients', 'Appareils', 'Ustensiles'];
+    categoriesNames.forEach(name => {
+        const category = createCategory(name);
+        container.appendChild(category);
+    });
+};
+
+// const getKeywords = () => {
+
+// }
+
+// const createCard = () => {
 //     const card = document.createElement('div');
 //     const cardFigure = document.createElement('figure');
 //     const cardImg = document.createElement('img');
@@ -45,5 +58,16 @@
 
 //     cardFigure.append(cardImg, cardCaption);
 //     card.append(cardFigure);
-//     cardsSection.appendChild(card);
-// };
+    
+// }
+
+// const generateRecipeCard = () => {
+//     const recipeCard = recipes.map(createCard);
+//     console.log(recipeCard);
+//     cardsSection.appendChild(recipeCard);
+
+// }
+
+window.onload = () => {
+    generateCategories(cardsSection);
+}

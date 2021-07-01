@@ -44,6 +44,7 @@ figure {
   height: 364px;
   border-radius: 5px;
   margin: 0;
+  background-color: #C7BEBE;
 }
 figure .cardImg {
   width: 100%;
@@ -88,26 +89,35 @@ figure .recipe-details .recipe-description {
 
 .category {
   padding: 15PX;
-  display: inline-block;
+  display: flex;
   width: 170px;
+  height: 40px;
+  align-items: center;
   border-radius: 5px;
   color: white;
-  background-color: #3282F7;
 }
 
 form {
   width: 100%;
 }
+form .blue {
+  background-color: #3282F7;
+}
+form .green {
+  background-color: #68D9A4;
+}
+form .red {
+  background-color: #D04F4F;
+}
 
 #search-by {
   display: inline-block;
-  padding: 15px;
   border: none;
   border-radius: 5px;
-  background-color: transparent;
   width: 100%;
   font-size: initial;
   font-weight: bold;
+  color: white;
 }
 #search-by::placeholder {
   color: white;
