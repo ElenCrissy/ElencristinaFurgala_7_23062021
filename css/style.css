@@ -1,8 +1,8 @@
 body {
-  font-family: "DM Sans", sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: normal;
   font-style: normal;
-  width: 90%;
+  width: 80%;
   margin: 30px auto;
 }
 
@@ -39,44 +39,60 @@ body {
   font-size: 26px;
 }
 
+.card {
+  width: 31%;
+  margin-bottom: 30px;
+}
+
 figure {
-  width: 30%;
+  width: 100%;
   height: 364px;
   border-radius: 5px;
   margin: 0;
   background-color: #C7BEBE;
 }
-figure .cardImg {
+figure .card-img {
   width: 100%;
   height: 178px;
+  border-radius: 5px;
   background-color: #C7BEBE;
 }
 figure figcaption {
   width: 100%;
   height: 186px;
+  border-radius: 0 0 5px 5px;
   background-color: #E7E7E7;
   display: flex;
   flex-wrap: wrap;
 }
 figure .recipe-details {
-  width: 40%;
   padding: 10px;
 }
-figure .recipe-details .recipe-title {
+figure .recipe-details.recipe-title {
+  width: 80%;
   font-weight: bold;
+  font-size: 18px;
 }
-figure .recipe-details .recipe-time {
+figure .recipe-details.recipe-time {
+  width: 5%;
   font-weight: bold;
+  font-size: 18px;
   display: flex;
-  text-align: end;
+  justify-content: flex-end;
 }
-figure .recipe-details .recipe-ingredients {
-  font-size: small;
+figure .recipe-details.recipe-ingredients {
+  width: 42%;
+  font-size: 12px;
 }
-figure .recipe-details .recipe-description {
-  font-size: small;
+figure .recipe-details.recipe-description {
+  width: 42%;
+  font-size: 12px;
+  text-align: justify;
+  font-family: "Roboto", sans-serif;
   display: flex;
   justify-content: flex-start;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .tag {
@@ -87,18 +103,30 @@ figure .recipe-details .recipe-description {
   color: white;
 }
 
-.category {
-  padding: 15PX;
+.dropdown {
   display: flex;
-  width: 170px;
-  height: 40px;
   align-items: center;
   border-radius: 5px;
   color: white;
+  margin-right: 50px;
+  position: relative;
+}
+.dropdown .arrow {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border: 4px solid;
+  border-color: transparent transparent white white;
+  transform: rotate(-45deg);
+  position: absolute;
+  top: 27px;
+  right: 4px;
 }
 
 form {
   width: 100%;
+  height: 60px;
+  margin-bottom: 20px;
 }
 form .blue {
   background-color: #3282F7;
@@ -111,11 +139,14 @@ form .red {
 }
 
 #search-by {
+  font-family: "Lato", sans-serif;
   display: inline-block;
   border: none;
+  padding: 10px;
   border-radius: 5px;
   width: 100%;
-  font-size: initial;
+  height: 100%;
+  font-size: 20px;
   font-weight: bold;
   color: white;
 }
@@ -139,12 +170,24 @@ form .red {
   color: #D04F4F;
 }
 
-.tags {
+#search-bar {
+  outline: none;
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+  border: none;
+}
+#search-bar::placeholder {
+  font-family: "Lato", sans-serif;
+  font-size: 20px;
+}
+
+.tag-container {
   display: flex;
   margin-top: 20px;
 }
 
-.categories {
+.dropdown-container {
   display: flex;
   margin-top: 20px;
 }

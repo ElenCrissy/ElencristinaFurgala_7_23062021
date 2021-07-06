@@ -10,7 +10,13 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
-        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+                
     </head>
 
     <body>
@@ -25,39 +31,22 @@
                 <div class="search-bar-container">
                     <div class="search-bar">
                         <form method="get" action="traitement.php">
-                            <input type="text" name="search" placeholder="Rechercher un ingrédient, appareil, ustensile ou une recette" id="search"/>
+                            <input type="text" name="search" placeholder="Rechercher un ingrédient, appareil, ustensile ou une recette" id="search-bar"/>
                         </form>
                         <button type="submit"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
 
-                <div class="tags">
-                    <div class="tag">
+                <div class="tag-container"></div>
+                    <!-- <div class="tag">
                         Coco
                         <i class="far fa-times-circle"></i>
-                    </div>
-                </div>
+                    </div> -->
 
-                <div class="categories">
-                    <div class="category">
-                        <form method="get" action="traitement.php">
-                            <input type="text" name="search" placeholder="Ingrédient" id="search-by"/>
-                        </form>
-                    </div>
-                </div>
+                <div class="dropdown-container"></div>
             </section>
 
-            <section class="cards-section">
-                <figure class="card">
-                    <img class="cardImg"/>
-                    <figcaption>
-                        <div class="recipe-details recipe-title">Limonade</div>
-                        <div class="recipe-details recipe-time"><i class="far fa-clock"></i> 10min</div>
-                        <div class="recipe-details recipe-ingredients">Ingrédients</div>
-                        <div class="recipe-details recipe-desription">Description</div>
-                    </figcaption>
-                </figure>
-            </section>
+            <section class="cards-section"></section>
         </main>
 
         <script type="module" src="/src/index.js"></script>

@@ -1,9 +1,21 @@
-.tags{
+#search-bar{
+    outline: none;
+    background-color: transparent;
+    height: 100%;
+    width: 100%;
+    border: none;
+    &::placeholder{
+        font-family: 'Lato', sans-serif;
+        font-size: 20px;
+    }
+}
+
+.tag-container{
     display: flex;
     margin-top: 20px;
 }
 
-.categories{
+.dropdown-container{
     display: flex;
     margin-top: 20px;
 }
