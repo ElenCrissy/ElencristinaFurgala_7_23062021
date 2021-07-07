@@ -4,25 +4,58 @@ import Dropdown from './dropdown.js'
 
 const dropdowns = document.querySelector('.dropdown-container');
 const cardSection = document.querySelector('.cards-section');
+let ingredientList = [];
+let applianceList = [];
+let ustensilList = [];
 
-// const generateRecipeCard = () => {
-//     const recipeCard = recipes.map(createCard);
-//     console.log(recipeCard);
-//     cardSection.appendChild(recipeCard);
+function getIngredients() {
+    recipes.forEach(recipe =>{
+        const recipeIngredients = recipe.ingredients;
+        recipeIngredients.forEach(ingredient => {
+            const ingredientName = ingredient.ingredient;
+            ingredientList.push(ingredientName);
+        });
+    });
+    // try again
+    ingredientList = [... new Set(ingredientList)];
+    console.log(ingredientList);
+    return ingredientList;
+}
 
-// }
+function getAppliances() {
+    recipes.forEach(recipe =>{
+        const recipeAppliance = recipe.appliance;
+        applianceList.push(recipeAppliance);
+    });
+    applianceList = [... new Set(applianceList)];
+    return applianceList;
+}
+
+function getUstensils() {
+    recipes.forEach(recipe =>{
+        const recipeUstensils = recipe.ustensils;
+        recipeUstensils.forEach(ustensil => ustensilList.push(ustensil));
+    });
+    ustensilList = [... new Set(ustensilList)];
+    return ustensilList;
+}
+
 
 window.onload = () => {
-    const dropdownNames = ['Ingrédients', 'Appareils', 'Ustensiles'];
-    dropdownNames.forEach(dropdownName => {
+    const ingredientKeywords = getIngredients();
+    const applianceKeywords = getAppliances();
+    const ustensilKeywords = getUstensils();
+    const dropdownContent = [
+        {
+            'Ingrédients' : ingredientKeywords,
+            'Appareils' : applianceKeywords, 
+            'Ustensils' : ustensilKeywords,
+        }];
+    dropdownContent.forEach(content => {
         const dropdown = new Dropdown;
-        dropdown.createDropdown(dropdownName, dropdowns);
+        dropdown.createDropdown(content, dropdowns);
     });
 
     const card = new Card;
-    recipes.forEach(recipe => {
-        const recipeCard = card.createCard(recipe, cardSection);
-        // console.log(recipeCard);
-    });
-    
+    recipes.forEach(recipe => card.createCard(recipe, cardSection));
 }

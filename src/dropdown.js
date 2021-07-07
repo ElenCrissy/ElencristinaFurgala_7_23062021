@@ -1,4 +1,9 @@
 export default class Dropdown {
+    constructor(category, items) {
+        this.category = category;
+        this.items = items;
+    }
+
     createDropdown(dropdownName, container) {
         const dropdown = document.createElement('div');
         const dropdownForm = document.createElement('form');
@@ -33,10 +38,5 @@ export default class Dropdown {
         return dropdown;
     }
     
-    // generateCategories(container) {
-    //     // let categoriesNames = ['Ingrédients', 'Appareils', 'Ustensiles'];
-    //     categoriesNames.forEach(name => {
-    //         const dropdown = this.createdropdown(name);
-    //     });
-    // };
+
 }
