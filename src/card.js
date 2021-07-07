@@ -7,6 +7,8 @@ export default class Card{
         const cardImg = document.createElement('img');
         const cardCaption = document.createElement('figcaption');
 
+        const recipeTitleTime = document.createElement('div');
+        const recipeIngredientsDescription = document.createElement('div');
         const recipeTitle = document.createElement('div');
         const recipeTime = document.createElement('div');
         const recipeTimeClock = document.createElement('i');
@@ -17,11 +19,17 @@ export default class Card{
         cardImg.classList.add('card-img');
         cardCaption.classList.add('card-caption');
 
+        recipeTitleTime.classList.add('title-time');
+        recipeIngredientsDescription.classList.add('ingredients-description');
         recipeTitle.classList.add('recipe-details', 'recipe-title');
         recipeTime.classList.add('recipe-details', 'recipe-time');
         recipeTimeClock.classList.add('far', 'fa-clock');
         recipeIngredients.classList.add('recipe-details', 'recipe-ingredients');
         recipeDescription.classList.add('recipe-details', 'recipe-description');
+
+        recipeTitle.appendChild(document.createTextNode(recipe.name));
+        const recipeTimeDetail = document.createTextNode(`${recipe.time} min`);
+        recipeTime.append(recipeTimeClock, recipeTimeDetail);
 
         const ingredients = recipe.ingredients;
         let ingredientName;
@@ -31,25 +39,32 @@ export default class Card{
             ingredientName = ingredient.ingredient;
             quantity = ingredient.quantity;
             unit = ingredient.unit;
-            if (unit === undefined ) {unit = ''};
+            let unitWord;
             let content;
+
+            if (unit === undefined) {
+                unit = '';
+            };
+
             if (quantity === undefined) {
                 quantity = '';
                 content = document.createTextNode(`${ingredientName}`);
             } else {
-                content = document.createTextNode(`${ingredientName} : ${quantity} ${unit}`);
-            }
-            recipeIngredients.appendChild(content);
+                const unitWords = unit.split(' ');
+                unitWord = unitWords[0];
+                content = document.createTextNode(`${ingredientName} : ${quantity} ${unitWord}`);
+            };
+            
+            const whitespace = document.createElement('br');
+            recipeIngredients.append(content, whitespace);
         });
 
-        recipeTitle.appendChild(document.createTextNode(recipe.name));
-        recipeTime.appendChild(document.createTextNode(`${recipe.time} min`));
         recipeDescription.appendChild(document.createTextNode(recipe.description));
 
-        // recipeTime.insertBefore(recipeTimeClock, recipeTime.children[1]);
-
-        recipeTime.appendChild(recipeTimeClock);
-        cardCaption.append(recipeTitle, recipeTime, recipeIngredients, recipeDescription);
+        recipeTitleTime.append(recipeTitle, recipeTime);
+        recipeIngredientsDescription.append(recipeIngredients, recipeDescription);
+        
+        cardCaption.append(recipeTitleTime, recipeIngredientsDescription);
         cardFigure.append(cardImg, cardCaption);
         card.append(cardFigure);
         container.appendChild(card);

@@ -1,6 +1,8 @@
 .card{
     width: 31%;
     margin-bottom: 30px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 figure{
@@ -23,33 +25,55 @@ figure{
         display: flex;
         flex-wrap: wrap;
     }
-
+    & .title-time, .ingredients-description{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 5px;
+    }
+    & .title-time{
+        height: 40px;
+    }
+    & .ingredients-description{
+        height: 60%;
+        text-overflow: ellipsis;
+    }
     & .recipe-details{
         padding: 10px;
         &.recipe-title{
-            width: 80%;
+            width: 62%;
+            height: 20px;
             font-weight: bold;
             font-size: 18px;
         }
         &.recipe-time{
-            width: 5%;
+            text-align: end;
             font-weight: bold;
             font-size: 18px;
             display: flex;
             justify-content: flex-end;
+            position : relative;
+            height: 20px;
+            & .fa-clock {
+                margin-right: 5px;
+                vertical-align: middle;
+                position: relative;
+                top: 2px;
+            }
         }
         &.recipe-ingredients{
             width: 42%;
             font-size: 12px;
+            overflow: hidden;
         }
         &.recipe-description{
             width: 42%;
             font-size: 12px;
-            text-align: justify;
+            // text-align: justify;
             font-family: 'Roboto', sans-serif;
             display: flex;
             justify-content: flex-start;
-            text-overflow: ellipsis;
+            // text-overflow: ellipsis;
             overflow: hidden;
         }
     }
