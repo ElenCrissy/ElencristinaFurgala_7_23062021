@@ -45,15 +45,15 @@ window.onload = () => {
     const ingredientKeywords = getIngredients();
     const applianceKeywords = getAppliances();
     const ustensilKeywords = getUstensils();
-    const dropdownContent = [
-        {
-            'Ingrédients' : ingredientKeywords,
-            'Appareils' : applianceKeywords, 
-            'Ustensils' : ustensilKeywords,
-        }];
-    dropdownContent.forEach(content => {
-        const dropdown = new Dropdown;
-        dropdown.createDropdown(content, dropdowns);
+    let categoriesArray = new Map();
+    categoriesArray.set('Ingrédients', ingredientKeywords);
+    categoriesArray.set('Appliance', applianceKeywords);
+    categoriesArray.set('Ustensils', ustensilKeywords);
+    const categories = Array.from(categoriesArray);
+
+    categories.forEach(category => {
+        const dropdown = new Dropdown(dropdowns, category);
+        dropdown.createDropdown(category[0]);
     });
 
     const card = new Card;

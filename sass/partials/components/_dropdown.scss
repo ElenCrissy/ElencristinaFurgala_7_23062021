@@ -17,21 +17,27 @@
         position: absolute;
         top: 27px;
         right: -3px;
+        &.active{
+            transform: translateY(50%) rotate(-225deg);
+        }
     }
 }
 
 form{
     height: 50px;
     margin-bottom: 20px;
-    & .blue{
-        background-color: $colour-blue;
-    }  
-    & .green{
-        background-color: $colour-green;
-    } 
-    & .red{
-        background-color: $colour-red;
-    }
+}
+
+.blue{
+    background-color: $colour-blue;
+}
+
+.green{
+    background-color: $colour-green;
+} 
+
+.red{
+    background-color: $colour-red;
 }
 
 #search-by{
@@ -48,4 +54,14 @@ form{
     &::placeholder{
         color: white;
     }
+}
+
+.keyword-list{
+    width: 500px;
+    height: 200px;
+    display : none;
+    border-radius: 5px;
+    padding: 10px;
+    position: relative;
+    bottom:-1px;
 }
