@@ -17,7 +17,7 @@ export default class Dropdown {
         dropdownInput.setAttribute('name', 'search');
         dropdownInput.setAttribute('id', 'search-by');
     
-        if(dropdownName.toString() === 'Ingrédients') {
+        if(dropdownName.toString() === 'Ingredients') {
             dropdown.classList.add('ingredients');
             dropdownInput.classList.add('blue');
             dropdownInput.setAttribute('placeholder', 'Ingrédients');
@@ -38,7 +38,19 @@ export default class Dropdown {
         this.container.appendChild(dropdown);
 
         this.createDropdownContent(dropdown, dropdownName);
-        // dropdown.addEventListener('click', this.openDropdown());
+
+        // events on dropdown
+        // on mouseover, keywords are displayed
+        dropdown.addEventListener('mouseover', () => {
+            this.openDropdown(dropdown);
+        });
+
+        // on mouseout, keywords disappear
+        dropdown.addEventListener('mouseout', () => {
+            if(arrow.classList.contains('active')) {
+                this.closeDropdown();
+            }
+        });
 
         return dropdown;
     }
@@ -47,6 +59,7 @@ export default class Dropdown {
         const keywordList = this.content[1];
         const keywordListContainer = document.createElement('div');
         keywordListContainer.classList.add('keyword-list-container');
+        keywordListContainer.setAttribute('id', 'col');
 
         if(dropdownName.toString() === 'Ingrédients') {
             keywordListContainer.classList.add('blue');
@@ -56,23 +69,41 @@ export default class Dropdown {
             keywordListContainer.classList.add('red');
         }
 
-        // keywordListContainer.appendChild(document.createTextNode(keywordList));
-        // dropdown.append(keywordListContainer);
-
+        let keywordDom;
+        keywordList.forEach(keyword => {
+            keywordDom = this.createKeywordDom(keywordListContainer, keyword);
+            return keywordDom
+        });
+        dropdown.append(keywordListContainer);
+        return dropdown;
     }
 
-    // openDropdown() {
-    //     const keywordListContainer = document.querySelector('.keyword-list-container');
-    //     const arrow = document.getElementById('.arrow');
-    //     keywordListContainer.style.display = 'flex';
-    //     arrow.classList.add('active');
-    // }
+    createKeywordDom(container, keyword){
+        const keywordDom = document.createElement('div');
+        keyword = keyword[0].toUpperCase() + keyword.slice(1);
+        keywordDom.appendChild(document.createTextNode(`${keyword}`));
+        keywordDom.classList.add('keyword');
+        container.appendChild(keywordDom);
+    }
+
+    openDropdown(dropdown) {
+        const dropdownContent = dropdown.querySelector('.keyword-list-container');
+        const arrow = dropdown.querySelector('.arrow');
+        const dropdownInput = dropdown.querySelector('input');
+        dropdown.classList.add('active');
+        arrow.classList.add('active');
+
+        dropdownContent.classList.add('active');
+        dropdownInput.removeAttribute('placeholder');
+        dropdownInput.setAttribute('value', `Recherche `)
+    }
     
-    // closeDropdown() {
-    //     const keywordListContainer = document.querySelector('.keyword-list-container');
-    //     const arrow = document.getElementById('.arrow');
-    //     keywordListContainer.style.display = 'none';
-    //     arrow.classList.remove('active');
-    // }
+    closeDropdown(dropdown) {
+        const dropdownContent = dropdown.querySelector('.keyword-list-container');
+        const arrow = dropdown.querySelector('.arrow');
+        dropdown.classList.remove('active');
+        arrow.classList.remove('active');
+        dropdownContent.classList.remove('active');
+    }
 
 }

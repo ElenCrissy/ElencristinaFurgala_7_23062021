@@ -6,6 +6,8 @@
     margin-right: 50px;
     position: relative;
     width: 160px;
+    flex-direction: column;
+    justify-content: flex-start;
     & .arrow {
         content: '';
         width: 6px;
@@ -13,19 +15,22 @@
         border: 3px solid;
         border-radius: 2px;
         border-color: transparent transparent white white;
-        transform: rotate(-45deg);
+        transform: rotate(136deg);
         position: absolute;
-        top: 27px;
+        top: 32px;
         right: -3px;
         &.active{
-            transform: translateY(50%) rotate(-225deg);
+            transform: translateY(-50%) rotate(-45deg);
         }
+    }
+    &.active{
+        align-items: initial;
+        width: 300px;
     }
 }
 
 form{
     height: 50px;
-    margin-bottom: 20px;
 }
 
 .blue{
@@ -56,12 +61,29 @@ form{
     }
 }
 
-.keyword-list{
-    width: 500px;
-    height: 200px;
+.keyword-list-container{
+    width: 100%;
     display : none;
     border-radius: 5px;
     padding: 10px;
     position: relative;
     bottom:-1px;
+    overflow: scroll;
+    max-height: 300px;
+    line-height: 30px;
+    &::-webkit-scrollbar{
+        display: none;
+    }
+    &#col{
+        width: inherit;
+        column-width: 100px;
+        padding: 10px;
+    }
+    & .keyword{
+        font-family: 'Lato', sans-serif;
+
+    }
+    &.active{
+        display: block;
+    }
 }

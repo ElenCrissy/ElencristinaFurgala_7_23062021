@@ -16,9 +16,7 @@ function getIngredients() {
             ingredientList.push(ingredientName);
         });
     });
-    // try again
     ingredientList = [... new Set(ingredientList)];
-    console.log(ingredientList);
     return ingredientList;
 }
 
