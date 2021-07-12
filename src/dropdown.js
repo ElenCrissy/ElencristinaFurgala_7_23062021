@@ -17,7 +17,7 @@ export default class Dropdown {
         dropdownInput.setAttribute('name', 'search');
         dropdownInput.setAttribute('id', 'search-by');
     
-        if(dropdownName.toString() === 'Ingredients') {
+        if(dropdownName.toString() === 'Ingrédients') {
             dropdown.classList.add('ingredients');
             dropdownInput.classList.add('blue');
             dropdownInput.setAttribute('placeholder', 'Ingrédients');
@@ -39,16 +39,17 @@ export default class Dropdown {
 
         this.createDropdownContent(dropdown, dropdownName);
 
+
         // events on dropdown
         // on mouseover, keywords are displayed
         dropdown.addEventListener('mouseover', () => {
-            this.openDropdown(dropdown);
+            this.openDropdown(dropdown, dropdownName);
         });
 
         // on mouseout, keywords disappear
         dropdown.addEventListener('mouseout', () => {
             if(arrow.classList.contains('active')) {
-                this.closeDropdown();
+                this.closeDropdown(dropdown, dropdownName);
             }
         });
 
@@ -86,7 +87,7 @@ export default class Dropdown {
         container.appendChild(keywordDom);
     }
 
-    openDropdown(dropdown) {
+    openDropdown(dropdown, dropdownName) {
         const dropdownContent = dropdown.querySelector('.keyword-list-container');
         const arrow = dropdown.querySelector('.arrow');
         const dropdownInput = dropdown.querySelector('input');
@@ -95,15 +96,31 @@ export default class Dropdown {
 
         dropdownContent.classList.add('active');
         dropdownInput.removeAttribute('placeholder');
-        dropdownInput.setAttribute('value', `Recherche `)
+        if (dropdownName === 'Ingrédients') {
+            dropdownInput.setAttribute('value', `Recherche par ingrédient`);
+        } else if (dropdownName === 'Appliance') {
+            dropdownInput.setAttribute('value', `Recherche par appareil`);
+        } else {
+            dropdownInput.setAttribute('value', `Recherche par ustensile`);
+        }
     }
     
-    closeDropdown(dropdown) {
+    closeDropdown(dropdown, dropdownName) {
+        const dropdownInput = dropdown.querySelector('input');
         const dropdownContent = dropdown.querySelector('.keyword-list-container');
         const arrow = dropdown.querySelector('.arrow');
         dropdown.classList.remove('active');
         arrow.classList.remove('active');
         dropdownContent.classList.remove('active');
+        dropdownInput.removeAttribute('value');
+
+        if (dropdownName === 'Ingrédients') {
+            dropdownInput.setAttribute('placeholder', `Ingrédients`);
+        } else if (dropdownName === 'Appliance') {
+            dropdownInput.setAttribute('placeholder', `Appareils`);
+        } else {
+            dropdownInput.setAttribute('placeholder', `Ustensiles`);
+        }
     }
 
 }
