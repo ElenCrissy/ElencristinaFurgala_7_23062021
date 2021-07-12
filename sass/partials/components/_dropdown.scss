@@ -61,6 +61,10 @@ form{
     }
 }
 
+input:focus{
+    outline-width: 0;
+}
+
 .keyword-list-container{
     width: 100%;
     display : none;

@@ -118,7 +118,7 @@ export default class Dropdown {
             dropdownInput.setAttribute('placeholder', `Ingrédients`);
         } else if (dropdownName === 'Appliance') {
             dropdownInput.setAttribute('placeholder', `Appareils`);
-        } else {
+        } else if (dropdownName === 'Ustensils'){
             dropdownInput.setAttribute('placeholder', `Ustensiles`);
         }
     }
