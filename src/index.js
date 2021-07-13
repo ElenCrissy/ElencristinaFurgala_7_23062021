@@ -1,7 +1,10 @@
 import {recipes} from '../recipes.js';
 import Card from './card.js';
 import Dropdown from './dropdown.js'
+import SearchBar from './searchBar.js';
+import TagList from './taglist.js';
 
+const tagContainer = document.querySelector('.tag-container');
 const dropdowns = document.querySelector('.dropdown-container');
 const cardSection = document.querySelector('.cards-section');
 let ingredientList = [];
@@ -49,8 +52,14 @@ window.onload = () => {
     categoriesArray.set('Ustensils', ustensilKeywords);
     const categories = Array.from(categoriesArray);
 
+    const searchBar = new SearchBar;
+    searchBar.initializeSearchBar();
+
+    const tagList = new TagList(tagContainer);
+    tagList.createTagListDom();
+
     categories.forEach(category => {
-        const dropdown = new Dropdown(dropdowns, category);
+        const dropdown = new Dropdown(dropdowns, category, tagList);
         dropdown.createDropdown(category[0]);
     });
 

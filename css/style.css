@@ -124,6 +124,10 @@ figure .recipe-details.recipe-description {
   border-radius: 5px;
   background-color: #3282F7;
   color: white;
+  margin-right: 10px;
+}
+.tag i {
+  margin-left: 5px;
 }
 
 .dropdown {
@@ -188,6 +192,18 @@ form {
 #search-by::placeholder {
   color: white;
 }
+#search-by::placeholder:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+#search-by.active::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: initial;
+}
+
+input:focus {
+  outline-width: 0;
+}
 
 .keyword-list-container {
   width: 100%;
@@ -209,7 +225,12 @@ form {
   padding: 10px;
 }
 .keyword-list-container .keyword {
+  padding: 3px;
   font-family: "Lato", sans-serif;
+}
+.keyword-list-container .keyword:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
 }
 .keyword-list-container.active {
   display: block;

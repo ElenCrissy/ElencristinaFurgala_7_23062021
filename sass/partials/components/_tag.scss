@@ -4,4 +4,8 @@
     border-radius: 5px;
     background-color: $colour-blue;
     color: white;
+    margin-right: 10px;
+    & i{
+        margin-left: 5px;
+    }
 }

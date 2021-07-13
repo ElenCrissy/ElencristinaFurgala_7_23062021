@@ -58,6 +58,14 @@ form{
     color: white;
     &::placeholder{
         color: white;
+        &:hover{
+            background-color: rgb(255,255,255, 0.2);
+            border-radius: 5px;
+        }
+    }
+    &.active::placeholder{
+        color: rgb(255,255,255, 0.5);
+        font-weight: initial;
     }
 }
 
@@ -84,7 +92,12 @@ input:focus{
         padding: 10px;
     }
     & .keyword{
+        padding: 3px;
         font-family: 'Lato', sans-serif;
+        &:hover{
+            background-color: rgb(255,255,255, 0.2);
+            border-radius: 5px;
+        }
 
     }
     &.active{

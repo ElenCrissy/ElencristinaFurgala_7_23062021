@@ -1,6 +1,5 @@
-import { recipes } from "../recipes.js";
-
 export default class Card{
+
     createCard(recipe, container) {
         const card = document.createElement('div');
         const cardFigure = document.createElement('figure');

@@ -1,7 +1,8 @@
 export default class Dropdown {
-    constructor(container, content) {
+    constructor(container, content, tagList) {
         this.container = container;
         this.content = content;
+        this.tagList = tagList;
     }
 
     createDropdown(dropdownName) {
@@ -84,25 +85,40 @@ export default class Dropdown {
         keyword = keyword[0].toUpperCase() + keyword.slice(1);
         keywordDom.appendChild(document.createTextNode(`${keyword}`));
         keywordDom.classList.add('keyword');
+        keywordDom.dataset['keyword'] = `${keyword}`;
         container.appendChild(keywordDom);
+
+        //event on keywordDom
+        keywordDom.addEventListener('click', () => {
+            this.tagList.createTag(keyword, container);
+        })
     }
 
     openDropdown(dropdown, dropdownName) {
         const dropdownContent = dropdown.querySelector('.keyword-list-container');
         const arrow = dropdown.querySelector('.arrow');
         const dropdownInput = dropdown.querySelector('input');
+        const keywordList = this.content[1];
         dropdown.classList.add('active');
         arrow.classList.add('active');
-
         dropdownContent.classList.add('active');
-        dropdownInput.removeAttribute('placeholder');
+        dropdownInput.classList.add('active');
+
         if (dropdownName === 'Ingrédients') {
-            dropdownInput.setAttribute('value', `Recherche par ingrédient`);
+            dropdownInput.setAttribute('placeholder', `Recherche par ingrédient`);
         } else if (dropdownName === 'Appliance') {
-            dropdownInput.setAttribute('value', `Recherche par appareil`);
+            dropdownInput.setAttribute('placeholder', `Recherche par appareil`);
         } else {
-            dropdownInput.setAttribute('value', `Recherche par ustensile`);
+            dropdownInput.setAttribute('placeholder', `Recherche par ustensile`);
         }
+
+        //user enters value input
+        dropdownInput.addEventListener('keyup', (e) => {
+            const inputValue = dropdownInput.value;
+            if(inputValue.length > 2) {
+                this.filterKeywordList(keywordList, inputValue);
+            }
+        });
     }
     
     closeDropdown(dropdown, dropdownName) {
@@ -112,7 +128,7 @@ export default class Dropdown {
         dropdown.classList.remove('active');
         arrow.classList.remove('active');
         dropdownContent.classList.remove('active');
-        dropdownInput.removeAttribute('value');
+        dropdownInput.classList.remove('active');
 
         if (dropdownName === 'Ingrédients') {
             dropdownInput.setAttribute('placeholder', `Ingrédients`);
@@ -121,6 +137,19 @@ export default class Dropdown {
         } else if (dropdownName === 'Ustensils'){
             dropdownInput.setAttribute('placeholder', `Ustensiles`);
         }
+    }
+
+    filterKeywordList(keywordList, inputValue) {
+        const filteredList = keywordList.filter(keyword => keyword.toLowerCase().includes(inputValue));
+        const unrelevantKeywords = [... new Set(keywordList.concat(filteredList))];
+        const keywordsDom = document.querySelectorAll('.keyword');
+        unrelevantKeywords.forEach(unrelevantKeyword => {
+            let found = arr1.some(r=> arr2.includes(r))
+        })
+
+        
+        
+        
     }
 
 }
