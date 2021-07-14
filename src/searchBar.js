@@ -1,20 +1,19 @@
-import { recipes } from '../recipes.js';
+import getRelevantRecipes from './search.js';
 
 export default class SearchBar {
     initializeSearchBar() {
         const searchBar = document.querySelector('.search-bar');
-        const searchbarInput = searchBar.querySelector('input');
+        const searchBarInput = searchBar.querySelector('input');
+        const searchBarForm = searchBar.querySelector('form');
 
+        //prevent submission
+        searchBarForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+        })
+        
         //user enters value input
-        searchbarInput.addEventListener('keyup', () => {
-            const inputValue = searchbarInput.value;
-            if(inputValue.length > 2) {
-                recipes.filter(recipe => {
-                    if (recipe.name.includes(inputValue) || recipe.ingredients.includes(inputValue) || recipe.description.includes(inputValue)) {
-                        console.log(recipe);
-                    }
-                });
-            };
+        searchBarInput.addEventListener('keyup', () => {
+            getRelevantRecipes(searchbarInput.value);
         });
     }
 }

@@ -42,6 +42,11 @@ export default class Dropdown {
 
 
         // events on dropdown
+        //prevent submission
+        dropdownForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+        })
+
         // on mouseover, keywords are displayed
         dropdown.addEventListener('mouseover', () => {
             this.openDropdown(dropdown, dropdownName);
@@ -142,10 +147,14 @@ export default class Dropdown {
     filterKeywordList(keywordList, inputValue) {
         const filteredList = keywordList.filter(keyword => keyword.toLowerCase().includes(inputValue));
         const unrelevantKeywords = [... new Set(keywordList.concat(filteredList))];
-        const keywordsDom = document.querySelectorAll('.keyword');
-        unrelevantKeywords.forEach(unrelevantKeyword => {
-            let found = arr1.some(r=> arr2.includes(r))
+        unrelevantKeywords.forEach(keyword => {
+            keywordList.slice(keyword);
+            return keywordList
         })
+
+        // const keywordDoms = dropdown.querySelectorAll('.keyword');
+        // let found = keywordDoms.every(keywordDom=> unrelevantKeywords.includes(keywordDom));
+        console.log(keywordList)
 
         
         
