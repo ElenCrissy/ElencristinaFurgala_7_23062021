@@ -3,6 +3,7 @@ export default class Dropdown {
         this.container = container;
         this.content = content;
         this.tagList = tagList;
+        this.callback = [];
     }
 
     createDropdown(dropdownName) {
@@ -38,7 +39,7 @@ export default class Dropdown {
         dropdown.append(dropdownForm, arrow);
         this.container.appendChild(dropdown);
 
-        this.createDropdownContent(dropdown, dropdownName);
+        this.createDropdownContent(dropdown, dropdownName, this.content[1]);
 
 
         // events on dropdown
@@ -62,11 +63,11 @@ export default class Dropdown {
         return dropdown;
     }
 
-    createDropdownContent(dropdown, dropdownName) {
-        const keywordList = this.content[1];
+    createDropdownContent(dropdown, dropdownName, keywordList) {
         const keywordListContainer = document.createElement('div');
+        const keywordListDom = document.createElement('div');
         keywordListContainer.classList.add('keyword-list-container');
-        keywordListContainer.setAttribute('id', 'col');
+        keywordListDom.setAttribute('id', 'col');
 
         if(dropdownName.toString() === 'Ingrédients') {
             keywordListContainer.classList.add('blue');
@@ -78,10 +79,14 @@ export default class Dropdown {
 
         let keywordDom;
         keywordList.forEach(keyword => {
-            keywordDom = this.createKeywordDom(keywordListContainer, keyword);
+            keywordDom = this.createKeywordDom(keywordListDom, keyword);
             return keywordDom
         });
-        dropdown.append(keywordListContainer);
+
+        keywordListDom.classList.add('keyword-list-dom');
+        keywordListContainer.appendChild(keywordListDom);
+        dropdown.appendChild(keywordListContainer);
+
         return dropdown;
     }
 
@@ -103,7 +108,6 @@ export default class Dropdown {
         const dropdownContent = dropdown.querySelector('.keyword-list-container');
         const arrow = dropdown.querySelector('.arrow');
         const dropdownInput = dropdown.querySelector('input');
-        const keywordList = this.content[1];
         dropdown.classList.add('active');
         arrow.classList.add('active');
         dropdownContent.classList.add('active');
@@ -119,9 +123,9 @@ export default class Dropdown {
 
         //user enters value input
         dropdownInput.addEventListener('keyup', (e) => {
-            const inputValue = dropdownInput.value;
-            if(inputValue.length > 2) {
-                this.filterKeywordList(keywordList, inputValue);
+            const userInput = e.target.value;
+            if(userInput.length > 2) {
+                this.callback.forEach(cb => cb(userInput));
             }
         });
     }
@@ -144,21 +148,13 @@ export default class Dropdown {
         }
     }
 
-    filterKeywordList(keywordList, inputValue) {
-        const filteredList = keywordList.filter(keyword => keyword.toLowerCase().includes(inputValue));
-        const unrelevantKeywords = [... new Set(keywordList.concat(filteredList))];
-        unrelevantKeywords.forEach(keyword => {
-            keywordList.slice(keyword);
-            return keywordList
-        })
-
-        // const keywordDoms = dropdown.querySelectorAll('.keyword');
-        // let found = keywordDoms.every(keywordDom=> unrelevantKeywords.includes(keywordDom));
-        console.log(keywordList)
-
-        
-        
-        
+    onUserInputChange(cb) {
+        this.callback.push(cb);
     }
 
+    setOptions(options)  {
+        const dropdownContent = document.querySelector('keyword-list-container');
+        dropdownContent.remove(dropdownContent.firstChild);
+        this.createDropdownContent(options);
+    }
 }

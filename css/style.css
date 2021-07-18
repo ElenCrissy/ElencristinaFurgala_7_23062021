@@ -216,13 +216,12 @@ input:focus {
   max-height: 300px;
   line-height: 30px;
 }
-.keyword-list-container::-webkit-scrollbar {
-  display: none;
-}
-.keyword-list-container#col {
-  width: inherit;
+.keyword-list-container #col {
+  width: 100%;
   column-width: 100px;
-  padding: 10px;
+}
+.keyword-list-container #col::-webkit-scrollbar {
+  overflow-x: hidden;
 }
 .keyword-list-container .keyword {
   padding: 3px;

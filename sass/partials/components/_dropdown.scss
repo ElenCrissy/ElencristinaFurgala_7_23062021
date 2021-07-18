@@ -83,13 +83,12 @@ input:focus{
     overflow: scroll;
     max-height: 300px;
     line-height: 30px;
-    &::-webkit-scrollbar{
-        display: none;
-    }
-    &#col{
-        width: inherit;
+    & #col{
+        width: 100%;
         column-width: 100px;
-        padding: 10px;
+        &::-webkit-scrollbar{
+            overflow-x: hidden;
+        }
     }
     & .keyword{
         padding: 3px;
@@ -98,7 +97,6 @@ input:focus{
             background-color: rgb(255,255,255, 0.2);
             border-radius: 5px;
         }
-
     }
     &.active{
         display: block;

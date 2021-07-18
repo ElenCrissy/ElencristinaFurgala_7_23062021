@@ -27,8 +27,6 @@ export default class TagList{
 
         tagList.appendChild(tag);
 
-        console.log(dropdownName)
-
         //events
         tagCross.addEventListener('click', () => {
             tag.remove();
