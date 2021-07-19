@@ -2,12 +2,12 @@ import {recipes} from '../recipes.js';
 import Card from './card.js';
 import Context from './context.js';
 import Dropdown from './dropdown.js'
-import OrderLogic from './orderLogic.js';
+import OrderOptionList from './orderOptionList.js';
 import SearchBar from './searchBar.js';
 import TagList from './taglist.js';
 
 const tagContainer = document.querySelector('.tag-container');
-const dropdowns = document.querySelector('.dropdown-container');
+const dropdownContainer = document.querySelector('.dropdown-container');
 const cardSection = document.querySelector('.cards-section');
 let ingredientList = [];
 let applianceList = [];
@@ -61,8 +61,11 @@ window.onload = () => {
     tagList.createTagListDom();
 
     categories.forEach(category => {
-        const dropdown = new Dropdown(dropdowns, category, tagList);
-        dropdown.createDropdown(category[0]);
+        // const dropdown = new Dropdown(dropdownContainer, category);
+        // dropdown.createDropdown(category[0]);
+        // const orderOptionList = new OrderOptionList(category[1]);
+        const context = new Context(dropdownContainer, category);
+        console.log('context', context)
     });
 
     const card = new Card;

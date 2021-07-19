@@ -1,8 +1,8 @@
 export default class Dropdown {
-    constructor(container, content, tagList) {
+    constructor(container, content) {
         this.container = container;
         this.content = content;
-        this.tagList = tagList;
+        // this.tagList = tagList;
         this.callback = [];
     }
 
@@ -63,27 +63,31 @@ export default class Dropdown {
         return dropdown;
     }
 
-    createDropdownContent(dropdown, dropdownName, keywordList) {
+    createDropdownContent(dropdown, dropdownName, options) {
         const keywordListContainer = document.createElement('div');
         const keywordListDom = document.createElement('div');
         keywordListContainer.classList.add('keyword-list-container');
+        keywordListDom.classList.add('keyword-list-dom');
         keywordListDom.setAttribute('id', 'col');
 
         if(dropdownName.toString() === 'Ingrédients') {
             keywordListContainer.classList.add('blue');
+            keywordListDom.classList.add('blue');
         } else if (dropdownName.toString() === 'Appliance') {
             keywordListContainer.classList.add('green');
+            keywordListDom.classList.add('green');
         } else if (dropdownName.toString() === 'Ustensils') {
             keywordListContainer.classList.add('red');
+            keywordListDom.classList.add('red');
+
         }
 
         let keywordDom;
-        keywordList.forEach(keyword => {
-            keywordDom = this.createKeywordDom(keywordListDom, keyword);
+        options.forEach(option => {
+            keywordDom = this.createKeywordDom(keywordListDom, option);
             return keywordDom
         });
 
-        keywordListDom.classList.add('keyword-list-dom');
         keywordListContainer.appendChild(keywordListDom);
         dropdown.appendChild(keywordListContainer);
 
@@ -99,9 +103,9 @@ export default class Dropdown {
         container.appendChild(keywordDom);
 
         //event on keywordDom
-        keywordDom.addEventListener('click', () => {
-            this.tagList.createTag(keyword, container);
-        })
+        // keywordDom.addEventListener('click', () => {
+        //     this.tagList.createTag(keyword, container);
+        // });
     }
 
     openDropdown(dropdown, dropdownName) {
@@ -123,9 +127,9 @@ export default class Dropdown {
 
         //user enters value input
         dropdownInput.addEventListener('keyup', (e) => {
-            const userInput = e.target.value;
-            if(userInput.length > 2) {
-                this.callback.forEach(cb => cb(userInput));
+            const inputValue = dropdownInput.value;
+            if(inputValue.length > 2) {
+                this.callback.forEach(callback => callback(inputValue));
             }
         });
     }
@@ -152,9 +156,17 @@ export default class Dropdown {
         this.callback.push(cb);
     }
 
-    setOptions(options)  {
-        const dropdownContent = document.querySelector('keyword-list-container');
+    setOptions(options, content)  {
+        let dropdown;
+        if (content === 'Ingrédients') {
+            dropdown = document.querySelector('.dropdown.ingredients');
+        } else if (content === 'Appliance') {
+            dropdown = document.querySelector('.dropdown.appareils');
+        } else {
+            dropdown = document.querySelector('.dropdown.ustensiles');
+        }
+        const dropdownContent = dropdown.querySelector('.keyword-list-container');
         dropdownContent.remove(dropdownContent.firstChild);
-        this.createDropdownContent(options);
+        this.createDropdownContent(dropdown, content[0], options);
     }
 }
