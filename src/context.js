@@ -8,11 +8,10 @@ export default class Context{
         this.dropdown = new Dropdown(container, content);
         this.orderOptionList = new OrderOptionList(content[1]);
 
-        this.dropdown.createDropdown(content[0]);
+        this.dropdown.createDropdownDOM(content[0]);
         this.dropdown.onUserInputChange(inputValue => {
             const options = this.orderOptionList.getOptions(inputValue);
-            this.dropdown.setOptions(options, content[0]);
+            this.dropdown.setOptions(options);
         });
-
     }
 }

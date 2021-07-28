@@ -3,7 +3,7 @@ export default class TagList{
         this.container = container;
     }
 
-    createTagListDom(){
+    createTagListDOM(){
         const tagListDom = document.createElement('div');
         tagListDom.classList.add('tag-list');
         this.container.appendChild(tagListDom); 

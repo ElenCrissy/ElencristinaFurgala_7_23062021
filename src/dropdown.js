@@ -1,45 +1,36 @@
 export default class Dropdown {
-    constructor(container, content) {
-        this.container = container;
-        this.content = content;
+    constructor(DOMContainer, dropdownName) {
+        this.DOMContainer = DOMContainer;
+        this.dropdownName = dropdownName;
         // this.tagList = tagList;
         this.callback = [];
     }
 
-    createDropdown(dropdownName) {
-        const dropdown = document.createElement('div');
+    createDropdownDOM() {
+        const dropdownDOM = document.createElement('div');
         const dropdownForm = document.createElement('form');
         const dropdownInput = document.createElement('input');
         const arrow = document.createElement('div');
     
-        dropdown.classList.add('dropdown');
+        dropdownDOM.classList.add('dropdown');
         dropdownForm.setAttribute('method', 'get');
         dropdownForm.setAttribute('action', 'traitement.php');
         dropdownInput.setAttribute('type', 'text');
         dropdownInput.setAttribute('name', 'search');
         dropdownInput.setAttribute('id', 'search-by');
-    
-        if(dropdownName.toString() === 'Ingrédients') {
-            dropdown.classList.add('ingredients');
-            dropdownInput.classList.add('blue');
-            dropdownInput.setAttribute('placeholder', 'Ingrédients');
-        } else if (dropdownName.toString() === 'Appliance') {
-            dropdown.classList.add('appareils');
-            dropdownInput.classList.add('green');
-            dropdownInput.setAttribute('placeholder', 'Appareils');
-        } else if (dropdownName.toString() === 'Ustensils') {
-            dropdown.classList.add('ustensiles');
-            dropdownInput.classList.add('red');
-            dropdownInput.setAttribute('placeholder', 'Ustensiles');
-        }
+
+        const inputPlaceholder = this.dropdownName[0].toUpperCase() + this.dropdownName.substr(1);
+        dropdownDOM.classList.add(`${this.dropdownName}`);
+        dropdownInput.classList.add(`${this.dropdownName}-color`);
+        dropdownInput.setAttribute('placeholder', `${inputPlaceholder}`);
         
         arrow.classList.add('arrow');
     
         dropdownForm.appendChild(dropdownInput);
-        dropdown.append(dropdownForm, arrow);
-        this.container.appendChild(dropdown);
+        dropdownDOM.append(dropdownForm, arrow);
+        this.DOMContainer.appendChild(dropdownDOM);
 
-        this.createDropdownContent(dropdown, dropdownName, this.content[1]);
+        // this.createDropdownContent(dropdown, this.dropdownName, options);
 
 
         // events on dropdown
@@ -49,58 +40,53 @@ export default class Dropdown {
         })
 
         // on mouseover, keywords are displayed
-        dropdown.addEventListener('mouseover', () => {
-            this.openDropdown(dropdown, dropdownName);
+        dropdownDOM.addEventListener('mouseover', () => {
+            this.openDropdown(dropdownDOM);
         });
 
         // on mouseout, keywords disappear
-        dropdown.addEventListener('mouseout', () => {
+        dropdownDOM.addEventListener('mouseout', () => {
             if(arrow.classList.contains('active')) {
-                this.closeDropdown(dropdown, dropdownName);
+                this.closeDropdown(dropdownDOM);
             }
         });
 
-        return dropdown;
+        return dropdownDOM;
     }
 
-    createDropdownContent(dropdown, dropdownName, options) {
-        const keywordListContainer = document.createElement('div');
-        const keywordListDom = document.createElement('div');
-        keywordListContainer.classList.add('keyword-list-container');
-        keywordListDom.classList.add('keyword-list-dom');
-        keywordListDom.setAttribute('id', 'col');
-
-        if(dropdownName.toString() === 'Ingrédients') {
-            keywordListContainer.classList.add('blue');
-            keywordListDom.classList.add('blue');
-        } else if (dropdownName.toString() === 'Appliance') {
-            keywordListContainer.classList.add('green');
-            keywordListDom.classList.add('green');
-        } else if (dropdownName.toString() === 'Ustensils') {
-            keywordListContainer.classList.add('red');
-            keywordListDom.classList.add('red');
-
+    showOptions(dropdownDOM, options, inputValue) {
+        if (inputValue === undefined) {
+            const keywordListContainer = document.createElement('div');
+            const keywordListDom = document.createElement('div');
+            keywordListContainer.classList.add('keyword-list-container');
+            keywordListDom.classList.add('keyword-list-dom');
+            keywordListDom.setAttribute('id', 'col');
+    
+            keywordListContainer.classList.add(`${this.dropdownName}-color`);
+            keywordListDom.classList.add(`${this.dropdownName}-color`);
+    
+            options.map(this.createKeywordDom(keywordListDom, option))
+            // let keywordDom;
+            // options.forEach(option => {
+            //     keywordDom = this.createKeywordDom(keywordListDom, option);
+            //     return keywordDom
+            // });
+            // utilise MAP !
+    
+            keywordListContainer.appendChild(keywordListDom);
+            dropdownDOM.appendChild(keywordListContainer);
+    
+            return dropdownDOM;
         }
-
-        let keywordDom;
-        options.forEach(option => {
-            keywordDom = this.createKeywordDom(keywordListDom, option);
-            return keywordDom
-        });
-
-        keywordListContainer.appendChild(keywordListDom);
-        dropdown.appendChild(keywordListContainer);
-
-        return dropdown;
     }
 
-    createKeywordDom(container, keyword){
+    createKeywordDom(keywordContainer, keyword){
         const keywordDom = document.createElement('div');
         keyword = keyword[0].toUpperCase() + keyword.slice(1);
         keywordDom.appendChild(document.createTextNode(`${keyword}`));
         keywordDom.classList.add('keyword');
         keywordDom.dataset['keyword'] = `${keyword}`;
-        container.appendChild(keywordDom);
+        keywordContainer.appendChild(keywordDom);
 
         //event on keywordDom
         // keywordDom.addEventListener('click', () => {
@@ -108,22 +94,16 @@ export default class Dropdown {
         // });
     }
 
-    openDropdown(dropdown, dropdownName) {
-        const dropdownContent = dropdown.querySelector('.keyword-list-container');
-        const arrow = dropdown.querySelector('.arrow');
-        const dropdownInput = dropdown.querySelector('input');
-        dropdown.classList.add('active');
+    openDropdown(dropdownDOM) {
+        const dropdownContent = dropdownDOM.querySelector('.keyword-list-container');
+        const arrow = dropdownDOM.querySelector('.arrow');
+        const dropdownInput = dropdownDOM.querySelector('input');
+        dropdownDOM.classList.add('active');
         arrow.classList.add('active');
         dropdownContent.classList.add('active');
         dropdownInput.classList.add('active');
 
-        if (dropdownName === 'Ingrédients') {
-            dropdownInput.setAttribute('placeholder', `Recherche par ingrédient`);
-        } else if (dropdownName === 'Appliance') {
-            dropdownInput.setAttribute('placeholder', `Recherche par appareil`);
-        } else {
-            dropdownInput.setAttribute('placeholder', `Recherche par ustensile`);
-        }
+        dropdownInput.setAttribute('placeholder', `Recherche par ${this.dropdownName}`);
 
         //user enters value input
         dropdownInput.addEventListener('keyup', (e) => {
@@ -134,39 +114,27 @@ export default class Dropdown {
         });
     }
     
-    closeDropdown(dropdown, dropdownName) {
-        const dropdownInput = dropdown.querySelector('input');
-        const dropdownContent = dropdown.querySelector('.keyword-list-container');
-        const arrow = dropdown.querySelector('.arrow');
-        dropdown.classList.remove('active');
+    closeDropdown(dropdownDOM) {
+        const inputPlaceholder = this.dropdownName[0].toUpperCase() + this.dropdownName.substr(1);
+        const dropdownInput = dropdownDOM.querySelector('input');
+        const dropdownContent = dropdownDOM.querySelector('.keyword-list-container');
+        const arrow = dropdownDOM.querySelector('.arrow');
+        dropdownDOM.classList.remove('active');
         arrow.classList.remove('active');
         dropdownContent.classList.remove('active');
         dropdownInput.classList.remove('active');
 
-        if (dropdownName === 'Ingrédients') {
-            dropdownInput.setAttribute('placeholder', `Ingrédients`);
-        } else if (dropdownName === 'Appliance') {
-            dropdownInput.setAttribute('placeholder', `Appareils`);
-        } else if (dropdownName === 'Ustensils'){
-            dropdownInput.setAttribute('placeholder', `Ustensiles`);
-        }
+        dropdownInput.setAttribute('placeholder', `${inputPlaceholder}`);
     }
 
     onUserInputChange(cb) {
         this.callback.push(cb);
     }
 
-    setOptions(options, content)  {
-        let dropdown;
-        if (content === 'Ingrédients') {
-            dropdown = document.querySelector('.dropdown.ingredients');
-        } else if (content === 'Appliance') {
-            dropdown = document.querySelector('.dropdown.appareils');
-        } else {
-            dropdown = document.querySelector('.dropdown.ustensiles');
-        }
-        const dropdownContent = dropdown.querySelector('.keyword-list-container');
-        dropdownContent.remove(dropdownContent.firstChild);
-        this.createDropdownContent(dropdown, content[0], options);
+    setOptions(options)  {
+        const dropdownDOM = document.querySelector(`.dropdown.${this.dropdownName}`)
+        const dropdownOptionsContainer = dropdownDOM.querySelector('.keyword-list-container');
+        dropdownOptionsContainer.removeChild(dropdownOptionsContainer.firstChild);
+        this.showOptions(dropdownDOM, options);
     }
 }

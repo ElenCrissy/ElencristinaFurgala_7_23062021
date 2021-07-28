@@ -9,11 +9,9 @@ import TagList from './taglist.js';
 const tagContainer = document.querySelector('.tag-container');
 const dropdownContainer = document.querySelector('.dropdown-container');
 const cardSection = document.querySelector('.cards-section');
-let ingredientList = [];
-let applianceList = [];
-let ustensilList = [];
 
-function getIngredients() {
+function getIngredientsList() {
+    let ingredientList = [];
     recipes.forEach(recipe =>{
         const recipeIngredients = recipe.ingredients;
         recipeIngredients.forEach(ingredient => {
@@ -25,7 +23,8 @@ function getIngredients() {
     return ingredientList;
 }
 
-function getAppliances() {
+function getAppliancesList() {
+    let applianceList = [];
     recipes.forEach(recipe =>{
         const recipeAppliance = recipe.appliance;
         applianceList.push(recipeAppliance);
@@ -34,7 +33,8 @@ function getAppliances() {
     return applianceList;
 }
 
-function getUstensils() {
+function getUstensilsList() {
+    let ustensilList = [];
     recipes.forEach(recipe =>{
         const recipeUstensils = recipe.ustensils;
         recipeUstensils.forEach(ustensil => ustensilList.push(ustensil));
@@ -43,29 +43,30 @@ function getUstensils() {
     return ustensilList;
 }
 
+function getLists() {
+    const listsObj = {
+        ingredients : getIngredientsList(),
+        appareils : getAppliancesList(),
+        ustensiles : getUstensilsList(),
+    }
+    return listsObj;
+}
+
 
 window.onload = () => {
-    const ingredientKeywords = getIngredients();
-    const applianceKeywords = getAppliances();
-    const ustensilKeywords = getUstensils();
-    let categoriesArray = new Map();
-    categoriesArray.set('Ingrédients', ingredientKeywords);
-    categoriesArray.set('Appliance', applianceKeywords);
-    categoriesArray.set('Ustensils', ustensilKeywords);
-    const categories = Array.from(categoriesArray);
-
     const searchBar = new SearchBar;
-    searchBar.initializeSearchBar();
-
     const tagList = new TagList(tagContainer);
-    tagList.createTagListDom();
 
-    categories.forEach(category => {
-        // const dropdown = new Dropdown(dropdownContainer, category);
-        // dropdown.createDropdown(category[0]);
+    searchBar.initializeSearchBar();
+    tagList.createTagListDOM();
+
+    Object.entries(getLists()).forEach(list => {
+        const listName = list[0]
+        const dropdown = new Dropdown(dropdownContainer, listName);
+        dropdown.createDropdownDOM();
         // const orderOptionList = new OrderOptionList(category[1]);
-        const context = new Context(dropdownContainer, category);
-        console.log('context', context)
+        // const context = new Context(dropdownContainer, category);
+        // console.log('context', context)
     });
 
     const card = new Card;
