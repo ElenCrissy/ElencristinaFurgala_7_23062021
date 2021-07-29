@@ -73,7 +73,7 @@ input:focus{
     outline-width: 0;
 }
 
-.keyword-list-container{
+.option-list-container{
     width: 100%;
     display : none;
     border-radius: 5px;
@@ -90,7 +90,7 @@ input:focus{
             overflow-x: hidden;
         }
     }
-    & .keyword{
+    & .option{
         padding: 3px;
         font-family: 'Lato', sans-serif;
         &:hover{

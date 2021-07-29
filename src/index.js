@@ -1,8 +1,8 @@
 import {recipes} from '../recipes.js';
 import Card from './card.js';
-import Context from './context.js';
+import FilterableDropdown from './filterableDropdown.js';
 import Dropdown from './dropdown.js'
-import OrderOptionList from './orderOptionList.js';
+import OptionList from './OptionList.js';
 import SearchBar from './searchBar.js';
 import TagList from './taglist.js';
 
@@ -61,12 +61,7 @@ window.onload = () => {
     tagList.createTagListDOM();
 
     Object.entries(getLists()).forEach(list => {
-        const listName = list[0]
-        const dropdown = new Dropdown(dropdownContainer, listName);
-        dropdown.createDropdownDOM();
-        // const orderOptionList = new OrderOptionList(category[1]);
-        // const context = new Context(dropdownContainer, category);
-        // console.log('context', context)
+        const filterableDropdown = new FilterableDropdown(dropdownContainer, list);
     });
 
     const card = new Card;
