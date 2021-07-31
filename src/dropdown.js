@@ -60,25 +60,6 @@ export default class Dropdown {
         return dropdownDOM;
     }
 
-    // showOptionList(dropdownDOM, options) {
-    //     console.log(options)
-    //     // const keywordListContainer = document.createElement('div');
-    //     // const keywordListDom = document.createElement('div');
-    //     // keywordListContainer.classList.add('keyword-list-container');
-    //     // keywordListDom.classList.add('keyword-list-dom');
-    //     // keywordListDom.setAttribute('id', 'col');
-
-    //     // keywordListContainer.classList.add(`${this.dropdownName}-color`);
-    //     // keywordListDom.classList.add(`${this.dropdownName}-color`);
-
-    //     options.map(this.createKeywordDom(keywordListDom, option));
-
-    //     keywordListContainer.appendChild(keywordListDom);
-    //     dropdownDOM.appendChild(keywordListContainer);
-
-    //     return dropdownDOM;
-    // }
-
     createKeywordDom(optionContainer, option){
         const optionDOM = document.createElement('div');
         option = option[0].toUpperCase() + option.slice(1);

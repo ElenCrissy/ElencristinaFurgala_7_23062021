@@ -2,11 +2,10 @@ import Dropdown from "./dropdown.js";
 import OptionList from "./OptionList.js";
 
 export default class FilterableDropdown{
-    constructor(DOMContainer, list) {
-        const options = [];
+    constructor(DOMContainer, listName, keywordsList) {
 
-        this.dropdown = new Dropdown(DOMContainer, list[0]);
-        this.optionList = new OptionList(list[1]);
+        this.dropdown = new Dropdown(DOMContainer, listName);
+        this.optionList = new OptionList(keywordsList);
 
         this.dropdown.createDropdownDOM();
         this.dropdown.onUserInputChange(inputValue => {

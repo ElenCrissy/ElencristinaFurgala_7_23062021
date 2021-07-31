@@ -10,13 +10,53 @@ const tagContainer = document.querySelector('.tag-container');
 const dropdownContainer = document.querySelector('.dropdown-container');
 const cardSection = document.querySelector('.cards-section');
 
+
+// function getList(callback){
+//     const list = [];
+//     recipes.forEach(recipe => {
+//         const keywords = callback(recipe);
+//     })
+//     const newlist = [... new Set (list)];
+//     return newlist
+// }
+
+// function getIngredients(recipe) {
+//     const ingredientList = [];
+//     const ingredients = recipe.ingredients;
+//     ingredients.forEach(element => {
+//         const ingredient = element.ingredient;
+//         ingredientList.push(ingredient);
+//         return ingredientList
+//     })
+//     return ingredientList
+// }
+
+// function getAppliances(recipe) {
+//     const applianceList = [];
+//     const appliances = recipe.appliance;
+//     appliances.forEach(element => {
+//         applianceList.push(element);
+//         return applianceList
+//     })
+//     return applianceList;
+// }
+
+// function getUstensils(recipe) {
+//     const ustensilList = [];
+//     const ustensils = recipe.ustensils;
+//     ustensils.forEach(ustensil => {
+//         ustensilList.push(ustensil);
+//         return ustensilList
+//     })
+//     return ustensilList
+// }
+
 function getIngredientsList() {
     let ingredientList = [];
     recipes.forEach(recipe =>{
         const recipeIngredients = recipe.ingredients;
         recipeIngredients.forEach(ingredient => {
-            const ingredientName = ingredient.ingredient;
-            ingredientList.push(ingredientName);
+            ingredientList.push(ingredient.ingredient);
         });
     });
     ingredientList = [... new Set(ingredientList)];
@@ -26,8 +66,7 @@ function getIngredientsList() {
 function getAppliancesList() {
     let applianceList = [];
     recipes.forEach(recipe =>{
-        const recipeAppliance = recipe.appliance;
-        applianceList.push(recipeAppliance);
+        applianceList.push(recipe.appliance);
     });
     applianceList = [... new Set(applianceList)];
     return applianceList;
@@ -35,9 +74,8 @@ function getAppliancesList() {
 
 function getUstensilsList() {
     let ustensilList = [];
-    recipes.forEach(recipe =>{
-        const recipeUstensils = recipe.ustensils;
-        recipeUstensils.forEach(ustensil => ustensilList.push(ustensil));
+    recipes.forEach(recipe => {
+        recipe.ustensils.forEach(ustensil => ustensilList.push(ustensil));
     });
     ustensilList = [... new Set(ustensilList)];
     return ustensilList;
@@ -60,9 +98,19 @@ window.onload = () => {
     searchBar.initializeSearchBar();
     tagList.createTagListDOM();
 
-    Object.entries(getLists()).forEach(list => {
-        const filterableDropdown = new FilterableDropdown(dropdownContainer, list);
-    });
+    // const trucs = [ingredients, appliances, ustensils];
+    // trucs.forEach(truc => {
+
+    //     const filterableDropdown = new FilterableDropdown(dropdownContainer, list);
+    // })
+
+    const lists = getLists();
+    for (let list in lists) {
+        const listName = list;
+        const options = lists[list];
+        console.log(listName, options)
+        const filterableDropdown = new FilterableDropdown(dropdownContainer, listName, options);
+    } 
 
     const card = new Card;
     recipes.forEach(recipe => card.createCard(recipe, cardSection));
