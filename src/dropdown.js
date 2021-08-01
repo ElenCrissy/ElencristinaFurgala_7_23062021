@@ -1,7 +1,8 @@
 export default class Dropdown {
-    constructor(DOMContainer, dropdownName) {
+    constructor(DOMContainer, dropdownName, options) {
         this.DOMContainer = DOMContainer;
         this.dropdownName = dropdownName;
+        this.options = options;
         // this.tagList = tagList;
         this.callback = [];
     }
@@ -85,13 +86,13 @@ export default class Dropdown {
 
         dropdownInput.setAttribute('placeholder', `Recherche par ${this.dropdownName}`);
 
-        //user enters value input
-        dropdownInput.addEventListener('keyup', (e) => {
-            const inputValue = dropdownInput.value;
-            if(inputValue.length > 2) {
-                this.callback.forEach(callback => callback(inputValue));
-            }
-        });
+        // //user enters value input
+        // dropdownInput.addEventListener('keyup', (e) => {
+        //     const inputValue = dropdownInput.value;
+        //     if(inputValue.length > 2) {
+        //         this.callback.forEach(callback => callback(inputValue));
+        //     }
+        // });
     }
     
     closeDropdown(dropdownDOM) {
@@ -105,6 +106,10 @@ export default class Dropdown {
         dropdownInput.classList.remove('active');
 
         dropdownInput.setAttribute('placeholder', `${inputPlaceholder}`);
+    }
+
+    getOptions() {
+        this.setOptions(this.options);
     }
 
     onUserInputChange(cb) {

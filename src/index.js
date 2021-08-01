@@ -90,6 +90,17 @@ function getLists() {
     return listsObj;
 }
 
+function truc(dropdown, options) {
+    const optionList = new OptionList(options);
+
+    dropdown.onUserInputChange(inputValue => {
+        if (inputValue.length > 2) {
+            const options = optionList.getOptions(inputValue);
+            dropdown.setOptions(options);
+        }
+        return dropdown;
+    });
+}
 
 window.onload = () => {
     const searchBar = new SearchBar;
@@ -108,8 +119,10 @@ window.onload = () => {
     for (let list in lists) {
         const listName = list;
         const options = lists[list];
-        console.log(listName, options)
-        const filterableDropdown = new FilterableDropdown(dropdownContainer, listName, options);
+        // const filterableDropdown = new FilterableDropdown(dropdownContainer, listName, options);
+        const dropdown = new Dropdown(dropdownContainer, listName, options);
+        dropdown.createDropdownDOM();
+        truc(dropdown, options);
     } 
 
     const card = new Card;

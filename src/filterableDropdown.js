@@ -8,9 +8,17 @@ export default class FilterableDropdown{
         this.optionList = new OptionList(keywordsList);
 
         this.dropdown.createDropdownDOM();
+        // this.dropdown.displayOptions(inputValue => {
+        //     const options = this.optionList.getOptions();
+        //     this.dropdown.setOptions(options);
+        // })
+        this.optionList.getOptions();
         this.dropdown.onUserInputChange(inputValue => {
-            const options = this.optionList.getOptions(inputValue);
-            this.dropdown.setOptions(options);
+            if (inputValue.length > 2) {
+                const options = this.optionList.getOptions(inputValue);
+                this.dropdown.setOptions(options);
+            }
+            return this.dropdown;
         });
     }
 }

@@ -6,7 +6,7 @@ export default class OptionList{
     getOptions(inputValue) {
         const matchingOptions = [];
         if (inputValue === undefined) {
-            console.log(this.options)
+            console.log(this.options);
             return this.options;
         } else {
             this.options.forEach(option => {
@@ -14,7 +14,8 @@ export default class OptionList{
                     matchingOptions.push(option);
                 }
             });
-            return matchingOptions;
         }
+        return matchingOptions; 
+
     }
 }
