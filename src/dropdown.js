@@ -113,7 +113,13 @@ export default class Dropdown {
     }
 
     onUserInputChange(cb) {
-        this.callback.push(cb);
+        // this.callback.push(cb);
+        const input = document.querySelector(`.${this.dropdownName}-color`);
+        input.addEventListener('input', (e) => {
+            const inputValue = e.target.value;
+            console.log(inputValue)
+            cb(inputValue);
+        })
     }
 
     setOptions(options)  {
@@ -124,6 +130,6 @@ export default class Dropdown {
             optionListContainer.removeChild(optionListContainer.firstChild);
         }
         
-        options.map(option => this.createKeywordDom(dropdownOptionsContainer, option));
+        options.map(option => this.createKeywordDom(optionListContainer, option));
     }
 }

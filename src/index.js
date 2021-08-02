@@ -92,11 +92,11 @@ function getLists() {
 
 function truc(dropdown, options) {
     const optionList = new OptionList(options);
-
+    
     dropdown.onUserInputChange(inputValue => {
         if (inputValue.length > 2) {
-            const options = optionList.getOptions(inputValue);
-            dropdown.setOptions(options);
+            const updatedOptions = optionList.getOptions(inputValue);
+            dropdown.setOptions(updatedOptions);
         }
         return dropdown;
     });
