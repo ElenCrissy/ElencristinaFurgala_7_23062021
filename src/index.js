@@ -1,10 +1,11 @@
 import {recipes} from '../recipes.js';
+import * as Utils from './utils.js';
 import Card from './card.js';
-import FilterableDropdown from './filterableDropdown.js';
+// import FilterableDropdown from './filterableDropdown.js';
 import Dropdown from './dropdown.js'
-import OptionList from './OptionList.js';
+// import OptionList from './OptionList.js';
 import SearchBar from './searchBar.js';
-import TagList from './taglist.js';
+import TagList from './tagList.js';
 
 const tagContainer = document.querySelector('.tag-container');
 const dropdownContainer = document.querySelector('.dropdown-container');
@@ -51,57 +52,6 @@ const cardSection = document.querySelector('.cards-section');
 //     return ustensilList
 // }
 
-function getIngredientsList() {
-    let ingredientList = [];
-    recipes.forEach(recipe =>{
-        const recipeIngredients = recipe.ingredients;
-        recipeIngredients.forEach(ingredient => {
-            ingredientList.push(ingredient.ingredient);
-        });
-    });
-    ingredientList = [... new Set(ingredientList)];
-    return ingredientList;
-}
-
-function getAppliancesList() {
-    let applianceList = [];
-    recipes.forEach(recipe =>{
-        applianceList.push(recipe.appliance);
-    });
-    applianceList = [... new Set(applianceList)];
-    return applianceList;
-}
-
-function getUstensilsList() {
-    let ustensilList = [];
-    recipes.forEach(recipe => {
-        recipe.ustensils.forEach(ustensil => ustensilList.push(ustensil));
-    });
-    ustensilList = [... new Set(ustensilList)];
-    return ustensilList;
-}
-
-function getLists() {
-    const listsObj = {
-        ingredients : getIngredientsList(),
-        appareils : getAppliancesList(),
-        ustensiles : getUstensilsList(),
-    }
-    return listsObj;
-}
-
-function truc(dropdown, options) {
-    const optionList = new OptionList(options);
-    
-    dropdown.onUserInputChange(inputValue => {
-        if (inputValue.length > 2) {
-            const updatedOptions = optionList.getOptions(inputValue);
-            dropdown.setOptions(updatedOptions);
-        }
-        return dropdown;
-    });
-}
-
 window.onload = () => {
     const searchBar = new SearchBar;
     const tagList = new TagList(tagContainer);
@@ -115,14 +65,15 @@ window.onload = () => {
     //     const filterableDropdown = new FilterableDropdown(dropdownContainer, list);
     // })
 
-    const lists = getLists();
+    const lists = Utils.getLists();
     for (let list in lists) {
         const listName = list;
         const options = lists[list];
         // const filterableDropdown = new FilterableDropdown(dropdownContainer, listName, options);
         const dropdown = new Dropdown(dropdownContainer, listName, options);
         dropdown.createDropdownDOM();
-        truc(dropdown, options);
+        Utils.filterDropdown(dropdown, options);
+        Utils.sendOptionToTaglist(dropdown, tagList);
     } 
 
     const card = new Card;

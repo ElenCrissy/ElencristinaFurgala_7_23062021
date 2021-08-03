@@ -110,6 +110,7 @@ export default class Dropdown {
 
     getOptions() {
         this.setOptions(this.options);
+        return this.options
     }
 
     onUserInputChange(cb) {
@@ -131,5 +132,16 @@ export default class Dropdown {
         }
         
         options.map(option => this.createKeywordDom(optionListContainer, option));
+    }
+
+    onClickOption(cb) {
+        const dropdown = document.querySelector(`.${this.dropdownName}`);
+        const optionsDOM = dropdown.querySelectorAll('.option');
+        optionsDOM.forEach(option => {
+            const optionContent = option.innerHTML;
+            option.addEventListener('click', () => {
+                cb(optionContent, dropdown);
+            })
+        })
     }
 }
