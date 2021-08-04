@@ -14,13 +14,11 @@ export default class TagList{
         const tag = document.createElement('div');
         const tagCross = document.createElement('i');
         const keywordWithoutSpace = keyword.replace(/\s+/g, '');
-
-        
+        const hasChild = tagList.querySelector(`.${keywordWithoutSpace}`);
         
         tag.classList.add('tag', `${keywordWithoutSpace}`);
         tagCross.classList.add('far', 'fa-times-circle');
         tag.append(document.createTextNode(`${keyword}`), tagCross);
-        console.log(dropdown)
         
         if(dropdown.dropdownName === 'ingredients') {
             tag.style.backgroundColor = '#3282F7';
@@ -30,21 +28,15 @@ export default class TagList{
             tag.style.backgroundColor = '#D04F4F';
         }
 
-        
-
-        if (tagList.children.length > 0) {
-            const children = Array.from(tagList.children);
-            console.log(children)
-            children.forEach(child => {
-                if (child.classList.contains(`${keywordWithoutSpace}`)) {
-                    child.remove();
-                }
-            })
-        } 
-
         tagList.appendChild(tag);
 
-        
+        if(hasChild != null) {
+            const childrenWithKeywordClass = Array.from(tagList.querySelectorAll(`.${keywordWithoutSpace}`));
+            console.log(childrenWithKeywordClass);
+            childrenWithKeywordClass.map(el => {
+                el.remove();
+            })
+        }
 
         //events
         tagCross.addEventListener('click', () => {
