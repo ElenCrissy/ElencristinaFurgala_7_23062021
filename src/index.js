@@ -1,6 +1,6 @@
 import {recipes} from '../recipes.js';
 import * as Utils from './utils.js';
-import Card from './card.js';
+import CardSection from './cardSection.js';
 // import FilterableDropdown from './filterableDropdown.js';
 import Dropdown from './dropdown.js'
 // import OptionList from './OptionList.js';
@@ -55,17 +55,16 @@ const cardSection = document.querySelector('.cards-section');
 window.onload = () => {
     const searchBar = new SearchBar;
     const tagList = new TagList(tagContainer);
+    const lists = Utils.getLists();
 
     searchBar.initializeSearchBar();
     tagList.createTagListDOM();
 
-    // const trucs = [ingredients, appliances, ustensils];
-    // trucs.forEach(truc => {
-
+    // const categories = [ingredients, appliances, ustensils];
+    // categories.forEach(category => {
     //     const filterableDropdown = new FilterableDropdown(dropdownContainer, list);
     // })
 
-    const lists = Utils.getLists();
     for (let list in lists) {
         const listName = list;
         const options = lists[list];
@@ -73,9 +72,6 @@ window.onload = () => {
         const dropdown = new Dropdown(dropdownContainer, listName, options);
         dropdown.createDropdownDOM();
         Utils.filterDropdown(dropdown, options);
-        Utils.sendOptionToTaglist(dropdown, tagList);
-    } 
-
-    const card = new Card;
-    recipes.forEach(recipe => card.createCard(recipe, cardSection));
+        Utils.sendOptionToTagList(dropdown, tagList);
+    }
 }

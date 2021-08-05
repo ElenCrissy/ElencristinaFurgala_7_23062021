@@ -3,7 +3,6 @@ export default class Dropdown {
         this.DOMContainer = DOMContainer;
         this.dropdownName = dropdownName;
         this.options = options;
-        // this.tagList = tagList;
         this.callback = [];
     }
 
@@ -41,7 +40,7 @@ export default class Dropdown {
         this.DOMContainer.appendChild(dropdownDOM);
 
         // events on dropdown
-        //prevent submission
+        // prevent submission
         dropdownForm.addEventListener('submit', (e) => {
             e.preventDefault();
         })
@@ -68,11 +67,6 @@ export default class Dropdown {
         optionDOM.classList.add('option');
         optionDOM.dataset['option'] = `${option}`;
         optionContainer.appendChild(optionDOM);
-
-        //event on keywordDom
-        // optionDom.addEventListener('click', () => {
-        //     this.tagList.createTag(option, container);
-        // });
     }
 
     openDropdown(dropdownDOM) {
@@ -85,14 +79,6 @@ export default class Dropdown {
         dropdownInput.classList.add('active');
 
         dropdownInput.setAttribute('placeholder', `Recherche par ${this.dropdownName}`);
-
-        // //user enters value input
-        // dropdownInput.addEventListener('keyup', (e) => {
-        //     const inputValue = dropdownInput.value;
-        //     if(inputValue.length > 2) {
-        //         this.callback.forEach(callback => callback(inputValue));
-        //     }
-        // });
     }
     
     closeDropdown(dropdownDOM) {
@@ -114,11 +100,9 @@ export default class Dropdown {
     }
 
     onUserInputChange(cb) {
-        // this.callback.push(cb);
         const input = document.querySelector(`.${this.dropdownName}-color`);
         input.addEventListener('input', (e) => {
             const inputValue = e.target.value;
-            console.log(inputValue)
             cb(inputValue);
         })
     }

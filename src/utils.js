@@ -2,7 +2,6 @@ import {recipes} from '../recipes.js';
 import OptionList from './OptionList.js';
 import TagList from './tagList.js';
 
-
 export function getIngredientsList() {
     let ingredientList = [];
     recipes.forEach(recipe =>{
@@ -57,9 +56,48 @@ export function filterDropdown(dropdown) {
     });
 }
 
-export function sendOptionToTaglist(dropdown, tagList) {
+export function sendOptionToTagList(dropdown, tagList) {
     dropdown.onClickOption(option => {
         tagList.createTag(option, dropdown);
+        const filteringTagsDOM = tagList.getSelectedTags();
+        const filteringTags = [];
+        filteringTagsDOM.forEach(el => filteringTags.push(el.innerText));
+        filteringTags.forEach(filteringTag => getRelevantRecipes(filteringTag));
         return tagList;
     });
+}
+
+export function getRelevantRecipes(tag){
+
+    if (tag === undefined) {
+        return recipes
+    } else {
+        const filteredRecipesArray = []
+        recipes.filter(recipe => {
+            const ingredients = recipe.ingredients;
+            const appliance = recipe.appliance;
+            const ustensils = recipe.ustensils;
+
+            for (let ingredient in ingredients) {
+                if(ingredient.includes(tag)) {
+                    filteredRecipesArray.push(recipe);
+                    return filteredRecipesArray
+                }
+            }
+            if (appliance.includes(tag)) {
+                filteredRecipesArray.push(tag);
+                return filteredRecipesArray
+            }
+            ustensils.forEach(ustensil => {
+                if(ustensil.includes(tag)) {
+                    filteredRecipesArray.push(tag);
+                    return filteredRecipesArray
+                }
+            })
+        });
+        console.log(filteredRecipesArray)
+        return filteredRecipesArray
+    }
+
+
 }

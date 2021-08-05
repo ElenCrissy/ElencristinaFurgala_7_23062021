@@ -1,4 +1,4 @@
-export default class Card{
+export default class CardSection{
 
     createCard(recipe, container) {
         const card = document.createElement('div');
