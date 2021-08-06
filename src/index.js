@@ -55,7 +55,7 @@ window.onload = () => {
     const tagList = new TagList(tagContainer);
     const lists = Utils.getLists();
 
-    searchBar.initializeSearchBar();
+    searchBar.setSearchBar();
     tagList.createTagListDOM();
 
     // const categories = [ingredients, appliances, ustensils];

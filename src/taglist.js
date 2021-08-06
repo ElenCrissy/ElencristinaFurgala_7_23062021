@@ -1,7 +1,8 @@
 export default class TagList{
     constructor(container){
         this.container = container;
-        this.appendedTags = [];
+        this.callbacks = [];
+        this.updatedList = [];
     }
 
     createTagListDOM(){
@@ -16,6 +17,8 @@ export default class TagList{
         const tagCross = document.createElement('i');
         const keywordWithoutSpace = keyword.replace(/\s+/g, '');
         const hasChildWithKeywordClass = tagListDOM.querySelector(`.${keywordWithoutSpace}`);
+
+        this.updatedList.push(keyword);
         
         tag.classList.add('tag', `${keywordWithoutSpace}`);
         tagCross.classList.add('far', 'fa-times-circle');
@@ -34,14 +37,13 @@ export default class TagList{
 
         tagListDOM.appendChild(tag);
 
-        this.removeSameTag(keywordWithoutSpace, hasChildWithKeywordClass);
-
-        this.getSelectedTags(dropdown.dropdownName);
+        this.removeSameTag(keyword, hasChildWithKeywordClass);
 
         //events
         tagCross.addEventListener('click', () => {
             tag.remove();
-            this.getSelectedTags(dropdown.dropdownName);
+            const filteredUpdatedList = this.updatedList.filter(element => element !== keyword);
+            this.updatedList = filteredUpdatedList;
         })
         
         return tagListDOM
@@ -49,33 +51,24 @@ export default class TagList{
 
     removeSameTag(keyword, childElement) {
         const tagListDOM = document.querySelector('.tag-list');
+        const keywordWithoutSpace = keyword.replace(/\s+/g, '');
+
 
         if(childElement != null) {
-            const childElement = Array.from(tagListDOM.querySelectorAll(`.${keyword}`));
+            const childElement = Array.from(tagListDOM.querySelectorAll(`.${keywordWithoutSpace}`));
             childElement.forEach(child => {
                 child.remove();
             })
+            const filteredUpdatedList = this.updatedList.filter(element => element !== keyword);
+            this.updatedList = filteredUpdatedList;
+            return this.updatedList
         }
         
         return tagListDOM
     }
 
-    getSelectedTags(category) {
-        const tagListDOM = document.querySelector('.tag-list');
-        const tagListDOMChildren = tagListDOM.children;
-        const tagListDOMChildrenArray = Array.from(tagListDOMChildren);
-        const selectedTags = [];
-        tagListDOMChildrenArray.forEach(child => {
-            const keywordObj = {};
-            keywordObj.keyword = child.innerText;
-            keywordObj.category = category;
-            selectedTags.push(keywordObj);
-            return selectedTags
-        })
-        console.log(selectedTags)
+    onTagListChange(cb) {
+        this.callbacks.push(cb);
+        cb(this.updatedList);
     }
-
-    // onNewArray(keywords) {
-
-    // }
 }

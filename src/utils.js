@@ -64,10 +64,9 @@ export function filterDropdown(dropdown) {
 export function sendOptionToTagList(dropdown, tagList) {
     dropdown.onClickOption(option => {
         tagList.createTag(option, dropdown);
-        const selectedTags = tagList.getSelectedTags();
-        // filteringTags.forEach(filteringTag => getRelevantRecipes(option, dropdown.dropdownName));
         return tagList;
     });
+
 }
 
 export function getRelevantRecipes(option, category){
