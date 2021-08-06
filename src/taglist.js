@@ -36,12 +36,12 @@ export default class TagList{
 
         this.removeSameTag(keywordWithoutSpace, hasChildWithKeywordClass);
 
-        this.getSelectedTags();
+        this.getSelectedTags(dropdown.dropdownName);
 
         //events
         tagCross.addEventListener('click', () => {
             tag.remove();
-            this.getSelectedTags();
+            this.getSelectedTags(dropdown.dropdownName);
         })
         
         return tagListDOM
@@ -60,11 +60,22 @@ export default class TagList{
         return tagListDOM
     }
 
-    getSelectedTags() {
+    getSelectedTags(category) {
         const tagListDOM = document.querySelector('.tag-list');
         const tagListDOMChildren = tagListDOM.children;
         const tagListDOMChildrenArray = Array.from(tagListDOMChildren);
-        
-        return tagListDOMChildrenArray
+        const selectedTags = [];
+        tagListDOMChildrenArray.forEach(child => {
+            const keywordObj = {};
+            keywordObj.keyword = child.innerText;
+            keywordObj.category = category;
+            selectedTags.push(keywordObj);
+            return selectedTags
+        })
+        console.log(selectedTags)
     }
+
+    // onNewArray(keywords) {
+
+    // }
 }

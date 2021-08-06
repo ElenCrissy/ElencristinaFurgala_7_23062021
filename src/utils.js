@@ -1,6 +1,7 @@
 import {recipes} from '../recipes.js';
 import OptionList from './OptionList.js';
 import TagList from './tagList.js';
+import CardSection from './cardSection.js';
 
 export function getIngredientsList() {
     let ingredientList = [];
@@ -33,10 +34,14 @@ export function getUstensilsList() {
 }
 
 export function getLists() {
+    const ingredientList = getIngredientsList();
+    const appliancesList = getAppliancesList();
+    const ustensilsList = getUstensilsList();
+
     const listsObj = {
-        ingredients : getIngredientsList(),
-        appareils : getAppliancesList(),
-        ustensiles : getUstensilsList(),
+        ingredients : ingredientList,
+        appareils : appliancesList,
+        ustensiles : ustensilsList,
     }
     return listsObj;
 }
@@ -59,45 +64,44 @@ export function filterDropdown(dropdown) {
 export function sendOptionToTagList(dropdown, tagList) {
     dropdown.onClickOption(option => {
         tagList.createTag(option, dropdown);
-        const filteringTagsDOM = tagList.getSelectedTags();
-        const filteringTags = [];
-        filteringTagsDOM.forEach(el => filteringTags.push(el.innerText));
-        filteringTags.forEach(filteringTag => getRelevantRecipes(filteringTag));
+        const selectedTags = tagList.getSelectedTags();
+        // filteringTags.forEach(filteringTag => getRelevantRecipes(option, dropdown.dropdownName));
         return tagList;
     });
 }
 
-export function getRelevantRecipes(tag){
+export function getRelevantRecipes(option, category){
+    // console.log(keyword, category)
 
-    if (tag === undefined) {
-        return recipes
-    } else {
-        const filteredRecipesArray = []
-        recipes.filter(recipe => {
-            const ingredients = recipe.ingredients;
-            const appliance = recipe.appliance;
-            const ustensils = recipe.ustensils;
+    // if (keyword === undefined) {
+    //     return recipes
+    // } else {
+    //     const filteredRecipesArray = []
+    //     recipes.filter(recipe => {
+    //         const ingredients = recipe.ingredients;
+    //         const appliance = recipe.appliance;
+    //         const ustensils = recipe.ustensils;
 
-            for (let ingredient in ingredients) {
-                if(ingredient.includes(tag)) {
-                    filteredRecipesArray.push(recipe);
-                    return filteredRecipesArray
-                }
-            }
-            if (appliance.includes(tag)) {
-                filteredRecipesArray.push(tag);
-                return filteredRecipesArray
-            }
-            ustensils.forEach(ustensil => {
-                if(ustensil.includes(tag)) {
-                    filteredRecipesArray.push(tag);
-                    return filteredRecipesArray
-                }
-            })
-        });
-        console.log(filteredRecipesArray)
-        return filteredRecipesArray
-    }
+    //         for (let ingredient in ingredients) {
+    //             if(ingredient.includes(tag)) {
+    //                 filteredRecipesArray.push(recipe);
+    //                 return filteredRecipesArray
+    //             }
+    //         }
+    //         if (appliance.includes(tag)) {
+    //             filteredRecipesArray.push(tag);
+    //             return filteredRecipesArray
+    //         }
+    //         ustensils.forEach(ustensil => {
+    //             if(ustensil.includes(tag)) {
+    //                 filteredRecipesArray.push(tag);
+    //                 return filteredRecipesArray
+    //             }
+    //         })
+    //     });
+    //     console.log(filteredRecipesArray)
+    //     return filteredRecipesArray
+    // }
 
 
 }

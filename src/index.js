@@ -1,9 +1,7 @@
 import {recipes} from '../recipes.js';
 import * as Utils from './utils.js';
 import CardSection from './cardSection.js';
-// import FilterableDropdown from './filterableDropdown.js';
 import Dropdown from './dropdown.js'
-// import OptionList from './OptionList.js';
 import SearchBar from './searchBar.js';
 import TagList from './tagList.js';
 
@@ -68,7 +66,6 @@ window.onload = () => {
     for (let list in lists) {
         const listName = list;
         const options = lists[list];
-        // const filterableDropdown = new FilterableDropdown(dropdownContainer, listName, options);
         const dropdown = new Dropdown(dropdownContainer, listName, options);
         dropdown.createDropdownDOM();
         Utils.filterDropdown(dropdown, options);
