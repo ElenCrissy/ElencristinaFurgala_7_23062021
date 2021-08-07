@@ -66,41 +66,4 @@ export function sendOptionToTagList(dropdown, tagList) {
         tagList.createTag(option, dropdown);
         return tagList;
     });
-
-}
-
-export function getRelevantRecipes(option, category){
-    // console.log(keyword, category)
-
-    // if (keyword === undefined) {
-    //     return recipes
-    // } else {
-    //     const filteredRecipesArray = []
-    //     recipes.filter(recipe => {
-    //         const ingredients = recipe.ingredients;
-    //         const appliance = recipe.appliance;
-    //         const ustensils = recipe.ustensils;
-
-    //         for (let ingredient in ingredients) {
-    //             if(ingredient.includes(tag)) {
-    //                 filteredRecipesArray.push(recipe);
-    //                 return filteredRecipesArray
-    //             }
-    //         }
-    //         if (appliance.includes(tag)) {
-    //             filteredRecipesArray.push(tag);
-    //             return filteredRecipesArray
-    //         }
-    //         ustensils.forEach(ustensil => {
-    //             if(ustensil.includes(tag)) {
-    //                 filteredRecipesArray.push(tag);
-    //                 return filteredRecipesArray
-    //             }
-    //         })
-    //     });
-    //     console.log(filteredRecipesArray)
-    //     return filteredRecipesArray
-    // }
-
-
 }

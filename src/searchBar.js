@@ -1,5 +1,3 @@
-import getRelevantRecipes from './search.js';
-
 export default class SearchBar {
     constructor() {
         this.callbacks = [];
@@ -7,21 +5,21 @@ export default class SearchBar {
 
     setSearchBar() {
         const searchBar = document.querySelector('.search-bar');
-        const searchBarInput = searchBar.querySelector('input');
         const searchBarForm = searchBar.querySelector('form');
 
         //prevent submission
         searchBarForm.addEventListener('submit', (e) => {
             e.preventDefault();
         })
-        
-        //user enters value input
-        searchBarInput.addEventListener('keyup', () => {
-            getRelevantRecipes(searchbarInput.value);
-        });
     }
 
     onUserInputChange(cb){
+        const searchBar = document.querySelector('.search-bar');
+        const searchBarInput = searchBar.querySelector('input');
         this.callbacks.push(cb);
+        searchBarInput.addEventListener('input', (e) => {
+            const userInput = e.target.value;
+            cb(userInput);
+        })        
     }
 }

@@ -44,8 +44,8 @@ export default class TagList{
             tag.remove();
             const filteredUpdatedList = this.updatedList.filter(element => element !== keyword);
             this.updatedList = filteredUpdatedList;
+            return this.updatedList
         })
-        
         return tagListDOM
     }
 
@@ -68,6 +68,7 @@ export default class TagList{
     }
 
     onTagListChange(cb) {
+        console.log(this.updatedList)
         this.callbacks.push(cb);
         cb(this.updatedList);
     }
