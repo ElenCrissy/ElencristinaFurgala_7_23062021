@@ -25,10 +25,13 @@ window.onload = () => {
         const dropdown = new Dropdown(dropdownContainer, listName, options);
         dropdown.createDropdownDOM();
         Utils.filterDropdown(dropdown, options);
-        Utils.sendOptionToTagList(dropdown, tagList);
+        Utils.sendOptionToTagList(dropdown, tagList, search);
     }
 
     searchBar.onUserInputChange(userInput => search.getSearchTerms(userInput));
-    tagList.onTagListChange(keywordList => search.getKeywordList(keywordList));
+    tagList.onTagListChange(keywordList => {
+        console.log(keywordList)
+        // search.getKeywordList(keywordList)
+    });
 
 }

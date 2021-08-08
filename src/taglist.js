@@ -9,6 +9,7 @@ export default class TagList{
         const tagListDom = document.createElement('div');
         tagListDom.classList.add('tag-list');
         this.container.appendChild(tagListDom); 
+
     }
 
     createTag(keyword, dropdown){
@@ -53,7 +54,6 @@ export default class TagList{
         const tagListDOM = document.querySelector('.tag-list');
         const keywordWithoutSpace = keyword.replace(/\s+/g, '');
 
-
         if(childElement != null) {
             const childElement = Array.from(tagListDOM.querySelectorAll(`.${keywordWithoutSpace}`));
             childElement.forEach(child => {
@@ -61,14 +61,12 @@ export default class TagList{
             })
             const filteredUpdatedList = this.updatedList.filter(element => element !== keyword);
             this.updatedList = filteredUpdatedList;
+
             return this.updatedList
         }
-        
-        return tagListDOM
     }
 
     onTagListChange(cb) {
-        console.log(this.updatedList)
         this.callbacks.push(cb);
         cb(this.updatedList);
     }

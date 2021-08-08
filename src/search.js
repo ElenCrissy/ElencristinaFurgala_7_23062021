@@ -14,7 +14,7 @@ export default class Search{
 
     getKeywordList(keywordList) {
         console.log('keywordList', keywordList)
-        keywordList.forEach(keyword => this.searchRecipes(null,keyword));
+        this.searchRecipes(null, keywordList);
     }
 
     searchRecipes(userInput, keywordList) {
@@ -24,20 +24,19 @@ export default class Search{
                     console.log(recipe);
                 }
             });
-        } else{
-            return recipes;
-        }
-
-        if (keywordList !== null) {
+        } else if (keywordList !== null) {
+            console.log('cookie, t\'as réussi !')
             keywordList.forEach(keyword => {
                 recipes.forEach(recipe => {
-                    if(recipe.category.includes(tag.innerHTML.toLowerCase())) {
+                    if(recipe.category.includes(keyword.toLowerCase())) {
                         return recipe
                     } else{
                         return recipes;
                     }
                 });
             });
+        } else {
+            return recipes;
         }
         
     }

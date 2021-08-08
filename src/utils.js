@@ -2,6 +2,7 @@ import {recipes} from '../recipes.js';
 import OptionList from './OptionList.js';
 import TagList from './tagList.js';
 import CardSection from './cardSection.js';
+import Search from './search.js';
 
 export function getIngredientsList() {
     let ingredientList = [];
@@ -61,9 +62,14 @@ export function filterDropdown(dropdown) {
     });
 }
 
-export function sendOptionToTagList(dropdown, tagList) {
+export function sendOptionToTagList(dropdown, tagList, search) {
     dropdown.onClickOption(option => {
         tagList.createTag(option, dropdown);
+
+        // problème quand tag retirer par croix !!!!!
+        tagList.onTagListChange(keywordList => {
+            search.getKeywordList(keywordList)
+        });
         return tagList;
     });
 }
