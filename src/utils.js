@@ -66,7 +66,7 @@ export function sendOptionToTagList(dropdown, tagList, search) {
     dropdown.onClickOption(option => {
         tagList.createTag(option, dropdown);
 
-        // problème quand tag retirer par croix !!!!!
+        // problème quand tag retiré par croix, modif pas prise en compte 
         tagList.onTagListChange(keywordList => {
             search.getKeywordList(keywordList)
         });
