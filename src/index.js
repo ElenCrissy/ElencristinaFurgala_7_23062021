@@ -29,9 +29,9 @@ window.onload = () => {
     }
 
     searchBar.onUserInputChange(userInput => search.getSearchTerms(userInput));
-    tagList.onTagListChange(keywordList => {
-        console.log(keywordList)
-        search.getKeywordList(keywordList)
-    });
+    // tagList.onTagListChange(keywordList => {
+    //     console.log(keywordList)
+    //     search.getKeywordList(keywordList)
+    // });
 
 }

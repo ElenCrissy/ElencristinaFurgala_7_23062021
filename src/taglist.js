@@ -22,11 +22,11 @@ export default class TagList{
             keyword : `${keyword}`,
             category : `${dropdown.dropdownName}`
         };
-        console.log('keywordObj =>', keywordObj)
+        // console.log('keywordObj =>', keywordObj)
         this.updatedList.push(keywordObj);
         
         tag.classList.add('tag', `${keywordWithoutSpace}`);
-        tagCross.classList.add('far', 'fa-times-circle');
+        tagCross.classList.add('cross', 'far', 'fa-times-circle');
         tag.append(document.createTextNode(`${keyword}`), tagCross);
         
         if(dropdown.dropdownName === 'ingredients') {
@@ -43,15 +43,25 @@ export default class TagList{
         tagListDOM.appendChild(tag);
 
         this.removeSameTag(keyword, hasChildWithKeywordClass);
+        this.closeTag(keyword, tag);
+
+        return tagListDOM
+    }
+
+    onCloseTag(keyword, tag) {
+        const tagCross = tag.querySelector('.cross');
+        // const keyword = tag.innerText;
 
         //events
         tagCross.addEventListener('click', () => {
             tag.remove();
             const filteredUpdatedList = this.updatedList.filter(element => element.keyword !== keyword);
             this.updatedList = filteredUpdatedList;
+            // console.log(this.updatedList)
             return this.updatedList
         })
-        return tagListDOM
+
+        return this.updatedList
     }
 
     removeSameTag(keyword, childElement) {
@@ -60,9 +70,7 @@ export default class TagList{
 
         if(childElement != null) {
             const childElement = Array.from(tagListDOM.querySelectorAll(`.${keywordWithoutSpace}`));
-            childElement.forEach(child => {
-                child.remove();
-            });
+            childElement.forEach(child => child.remove());
             const filteredUpdatedList = this.updatedList.filter(element => element.keyword !== keyword);
             this.updatedList = filteredUpdatedList;
 
@@ -72,8 +80,6 @@ export default class TagList{
 
     onTagListChange(cb) {
         this.callbacks.push(cb);
-        this.updatedList.addEventListener('change', () => {
-            cb(this.updatedList);
-        });
+        cb(this.updatedList);
     }
 }

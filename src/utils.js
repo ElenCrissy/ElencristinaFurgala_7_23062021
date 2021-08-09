@@ -65,11 +65,16 @@ export function filterDropdown(dropdown) {
 export function sendOptionToTagList(dropdown, tagList, search) {
     dropdown.onClickOption(option => {
         tagList.createTag(option, dropdown);
-
+        
         // problème quand tag retiré par croix, modif pas prise en compte 
-        // tagList.onTagListChange(keywordList => {
-        //     search.getKeywordList(keywordList)
-        // });
+        tagList.onTagListChange(keywordList => {
+            console.log(keywordList)
+            search.getKeywordList(keywordList);
+        });
+
+        if()
         return tagList;
     });
 }
+
+// export function closeTag()
