@@ -67,9 +67,9 @@ export function sendOptionToTagList(dropdown, tagList, search) {
         tagList.createTag(option, dropdown);
 
         // problème quand tag retiré par croix, modif pas prise en compte 
-        tagList.onTagListChange(keywordList => {
-            search.getKeywordList(keywordList)
-        });
+        // tagList.onTagListChange(keywordList => {
+        //     search.getKeywordList(keywordList)
+        // });
         return tagList;
     });
 }

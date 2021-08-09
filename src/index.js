@@ -20,9 +20,9 @@ window.onload = () => {
     tagList.createTagListDOM();
 
     for (let list in lists) {
-        const listName = list;
+        const category = list;
         const options = lists[list];
-        const dropdown = new Dropdown(dropdownContainer, listName, options);
+        const dropdown = new Dropdown(dropdownContainer, category, options);
         dropdown.createDropdownDOM();
         Utils.filterDropdown(dropdown, options);
         Utils.sendOptionToTagList(dropdown, tagList, search);
@@ -31,7 +31,7 @@ window.onload = () => {
     searchBar.onUserInputChange(userInput => search.getSearchTerms(userInput));
     tagList.onTagListChange(keywordList => {
         console.log(keywordList)
-        // search.getKeywordList(keywordList)
+        search.getKeywordList(keywordList)
     });
 
 }

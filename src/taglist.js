@@ -18,8 +18,12 @@ export default class TagList{
         const tagCross = document.createElement('i');
         const keywordWithoutSpace = keyword.replace(/\s+/g, '');
         const hasChildWithKeywordClass = tagListDOM.querySelector(`.${keywordWithoutSpace}`);
-
-        this.updatedList.push(keyword);
+        const keywordObj = {
+            keyword : `${keyword}`,
+            category : `${dropdown.dropdownName}`
+        };
+        console.log('keywordObj =>', keywordObj)
+        this.updatedList.push(keywordObj);
         
         tag.classList.add('tag', `${keywordWithoutSpace}`);
         tagCross.classList.add('far', 'fa-times-circle');
@@ -43,7 +47,7 @@ export default class TagList{
         //events
         tagCross.addEventListener('click', () => {
             tag.remove();
-            const filteredUpdatedList = this.updatedList.filter(element => element !== keyword);
+            const filteredUpdatedList = this.updatedList.filter(element => element.keyword !== keyword);
             this.updatedList = filteredUpdatedList;
             return this.updatedList
         })
@@ -58,8 +62,8 @@ export default class TagList{
             const childElement = Array.from(tagListDOM.querySelectorAll(`.${keywordWithoutSpace}`));
             childElement.forEach(child => {
                 child.remove();
-            })
-            const filteredUpdatedList = this.updatedList.filter(element => element !== keyword);
+            });
+            const filteredUpdatedList = this.updatedList.filter(element => element.keyword !== keyword);
             this.updatedList = filteredUpdatedList;
 
             return this.updatedList
@@ -68,6 +72,8 @@ export default class TagList{
 
     onTagListChange(cb) {
         this.callbacks.push(cb);
-        cb(this.updatedList);
+        this.updatedList.addEventListener('change', () => {
+            cb(this.updatedList);
+        });
     }
 }
