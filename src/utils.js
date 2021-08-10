@@ -71,10 +71,13 @@ export function sendOptionToTagList(dropdown, tagList, search) {
             console.log(keywordList)
             search.getKeywordList(keywordList);
         });
-
-        if()
         return tagList;
     });
 }
 
-// export function closeTag()
+export function onCloseTag() {
+    tagList.onTagListChange(keywordList => {
+        console.log(keywordList)
+        search.getKeywordList(keywordList);
+    });
+}

@@ -78,6 +78,10 @@ export default class TagList{
         }
     }
 
+    getUpdatedList(){
+        return this.updatedList;
+    }
+
     onTagListChange(cb) {
         this.callbacks.push(cb);
         cb(this.updatedList);
