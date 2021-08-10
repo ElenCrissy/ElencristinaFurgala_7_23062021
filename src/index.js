@@ -8,12 +8,13 @@ import Search from './search.js';
 
 const tagContainer = document.querySelector('.tag-container');
 const dropdownContainer = document.querySelector('.dropdown-container');
-const cardSection = document.querySelector('.cards-section');
+const cardSectionContainer = document.querySelector('.cards-section');
 
 window.onload = () => {
     const search = new Search();
     const searchBar = new SearchBar();
     const tagList = new TagList(tagContainer);
+    const cardSection = new CardSection(cardSectionContainer);
     const lists = Utils.getLists();
 
     searchBar.setSearchBar();
@@ -33,5 +34,5 @@ window.onload = () => {
     //     console.log(keywordList)
     //     search.getKeywordList(keywordList)
     // });
-
+    search.onNewResults(result => cardSection.createCard(result));
 }

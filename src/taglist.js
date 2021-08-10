@@ -22,8 +22,8 @@ export default class TagList{
             keyword : `${keyword}`,
             category : `${dropdown.dropdownName}`
         };
-        // console.log('keywordObj =>', keywordObj)
-        this.updatedList.push(keywordObj);
+        // this.updatedList.push(keywordObj);
+        this.updatedList.push(tag);
         
         tag.classList.add('tag', `${keywordWithoutSpace}`);
         tagCross.classList.add('cross', 'far', 'fa-times-circle');
@@ -42,48 +42,70 @@ export default class TagList{
 
         tagListDOM.appendChild(tag);
 
-        this.removeSameTag(keyword, hasChildWithKeywordClass);
-        this.closeTag(keyword, tag);
+        this.removeSameTag(tag, keyword, hasChildWithKeywordClass);
+        // this.closeTag(keyword, tag);
 
-        return tagListDOM
-    }
-
-    onCloseTag(keyword, tag) {
-        const tagCross = tag.querySelector('.cross');
-        // const keyword = tag.innerText;
-
-        //events
+        // //events
         tagCross.addEventListener('click', () => {
             tag.remove();
-            const filteredUpdatedList = this.updatedList.filter(element => element.keyword !== keyword);
+            // const filteredUpdatedList = this.updatedList.filter(element => element.keyword !== keyword);
+            const filteredUpdatedList = this.updatedList.filter(element => element !== tag);
             this.updatedList = filteredUpdatedList;
-            // console.log(this.updatedList)
             return this.updatedList
-        })
+        });
 
-        return this.updatedList
+        return tag
     }
 
-    removeSameTag(keyword, childElement) {
+    // closeTag(keyword, tag) {
+    //     const tagCross = tag.querySelector('.cross');
+    //     // const keyword = tag.innerText;
+
+    //     //events
+    //     tagCross.addEventListener('click', () => {
+    //         tag.remove();
+    //         const filteredUpdatedList = this.updatedList.filter(element => element.keyword !== keyword);
+    //         this.updatedList = filteredUpdatedList;
+    //         console.log(this.updatedList)
+    //         return this.updatedList
+    //     });
+
+    //     return this.updatedList
+    // }
+
+    removeSameTag(tag, keyword, childElement) {
         const tagListDOM = document.querySelector('.tag-list');
         const keywordWithoutSpace = keyword.replace(/\s+/g, '');
 
         if(childElement != null) {
             const childElement = Array.from(tagListDOM.querySelectorAll(`.${keywordWithoutSpace}`));
             childElement.forEach(child => child.remove());
-            const filteredUpdatedList = this.updatedList.filter(element => element.keyword !== keyword);
+            // const filteredUpdatedList = this.updatedList.filter(element => element.keyword !== keyword);
+            const filteredUpdatedList = this.updatedList.filter(element => element !== tag);
+            console.log(filteredUpdatedList)
+
             this.updatedList = filteredUpdatedList;
 
             return this.updatedList
         }
     }
 
-    getUpdatedList(){
+    getUpdatedList() {
         return this.updatedList;
     }
 
     onTagListChange(cb) {
         this.callbacks.push(cb);
+        console.log(this.updatedList)
+        // for (let i = 0; i < this.updatedList.length; i++)
+        // document.getElementById(array[i]).addEventListener('click', eventFunction);
+        this.updatedList.forEach(element => {
+            element.addEventListener('click', () => {
+                console.log('element', element);
+                console.log(this.updatedList)
+                return this.updatedList
+            })
+        })
         cb(this.updatedList);
     }
 }

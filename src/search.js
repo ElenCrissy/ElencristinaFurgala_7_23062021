@@ -7,13 +7,13 @@ export default class Search{
     }
 
     getSearchTerms(userInput) {
-        console.log('userInput', userInput)
         if(userInput.length > 2) {
             this.searchRecipes(userInput, null);
         }
     }
 
     getKeywordList(keywordList) {
+        console.log(keywordList)
         this.searchRecipes(null, keywordList);
     }
 
@@ -26,12 +26,11 @@ export default class Search{
                 }
             });
         } else if (keywordList !== null) {
-            console.log('keywordList', keywordList)
-
             keywordList.forEach(keyword => {
-
-                const keywordName = keyword.keyword;
-                const category = keyword.category;
+                const keywordName = keyword.innerText;
+                const category = keyword.dataset['category'];
+                // const keywordName = keyword.keyword;
+                // const category = keyword.category;
                 
                 recipes.forEach(recipe => {
                     if (category === 'ingredients') {
@@ -39,27 +38,24 @@ export default class Search{
                         recipeIngredients.forEach(ingredient => {
                             const ingredientName = ingredient.ingredient;
                             if (ingredientName.toLowerCase().includes(keywordName.toLowerCase())) {
-                                // console.log('recipe with ingredient', recipe);
                                 this.results.push(recipe);
-                                // return recipe
+                                return this.results
                             };
                         })
                     } else if (category === 'appareils') {
                         if (recipe.appliance.toLowerCase().includes(keywordName.toLowerCase())) {
-                            // console.log('recipe with appliance', recipe)
                             this.results.push(recipe);
-                            // return recipe
+                            return this.results
                         };
                     } else if (category === 'ustensiles') {
                         const recipeUstensils = recipe.ustensils;
                         recipeUstensils.forEach(ustensil => {
                             if(ustensil.toLowerCase().includes(keywordName.toLowerCase())) {
-                                // console.log('recipe with ustensil', recipe)
                                 this.results.push(recipe);
-                                // return recipe
+                                return this.results
                             }
                         })
-                    }
+                    }                
                 });
 
             });
@@ -67,13 +63,19 @@ export default class Search{
             recipes.forEach(recipe => this.results.push(recipe));
             // return recipes;
         }
+
+        const newResults = [... new Set(this.results)];
+        this.callbacks.forEach(cb => cb(newResults));
+        console.log(this.results);
     }
 
     getResults() {
         return this.results
     }
 
-    onUpdatedResults(cb) {
-        this.cb.push(cb);
+    onNewResults(cb) {
+        this.callbacks.push(cb);
+        const newResults = this.getResults();
+        newResults.forEach(result => cb(result));
     }
 }

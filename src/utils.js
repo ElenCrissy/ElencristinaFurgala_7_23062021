@@ -65,19 +65,25 @@ export function filterDropdown(dropdown) {
 export function sendOptionToTagList(dropdown, tagList, search) {
     dropdown.onClickOption(option => {
         tagList.createTag(option, dropdown);
+
+        // const tag = tagList.createTag(option, dropdown);
+        // const tagCross = tag.querySelector('.cross');
+        // tagCross.addEventListener('click', () => {
+        //     tag.remove();
+        //     const filteredUpdatedList = tagList.updatedList.filter(element => element.keyword !== option);
+        //     tagList.updatedList = filteredUpdatedList;
+        //     console.log('updatedlist', tagList.updatedList)
+        //     return tagList.updatedList
+        // });
+
+
         
         // problème quand tag retiré par croix, modif pas prise en compte 
         tagList.onTagListChange(keywordList => {
-            console.log(keywordList)
             search.getKeywordList(keywordList);
         });
         return tagList;
     });
 }
 
-export function onCloseTag() {
-    tagList.onTagListChange(keywordList => {
-        console.log(keywordList)
-        search.getKeywordList(keywordList);
-    });
-}
+// export function 

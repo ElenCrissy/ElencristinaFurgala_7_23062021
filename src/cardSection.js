@@ -1,6 +1,9 @@
 export default class CardSection{
+    constructor(container) {
+        this.container = container;
+    }
 
-    createCard(recipe, container) {
+    createCard(recipe) {
         const card = document.createElement('div');
         const cardFigure = document.createElement('figure');
         const cardImg = document.createElement('img');
@@ -66,7 +69,7 @@ export default class CardSection{
         cardCaption.append(recipeTitleTime, recipeIngredientsDescription);
         cardFigure.append(cardImg, cardCaption);
         card.append(cardFigure);
-        container.appendChild(card);
+        this.container.appendChild(card);
 
         return card;
     }
