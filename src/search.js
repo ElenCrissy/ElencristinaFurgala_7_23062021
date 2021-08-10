@@ -9,6 +9,8 @@ export default class Search{
     getSearchTerms(userInput) {
         if(userInput.length > 2) {
             this.searchRecipes(userInput, null);
+        } else {
+            this.searchRecipes(null, null);
         }
     }
 
@@ -42,12 +44,12 @@ export default class Search{
                                 return this.results
                             };
                         })
-                    } else if (category === 'appareils') {
+                    } else if (category === 'appliance') {
                         if (recipe.appliance.toLowerCase().includes(keywordName.toLowerCase())) {
                             this.results.push(recipe);
                             return this.results
                         };
-                    } else if (category === 'ustensiles') {
+                    } else if (category === 'ustensils') {
                         const recipeUstensils = recipe.ustensils;
                         recipeUstensils.forEach(ustensil => {
                             if(ustensil.toLowerCase().includes(keywordName.toLowerCase())) {
@@ -65,8 +67,8 @@ export default class Search{
         }
 
         const newResults = [... new Set(this.results)];
-        this.callbacks.forEach(cb => cb(newResults));
-        console.log(this.results);
+        // this.callbacks.forEach(cb => cb(newResults));
+        console.log(newResults);
     }
 
     getResults() {
