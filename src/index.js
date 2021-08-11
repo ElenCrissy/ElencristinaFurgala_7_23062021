@@ -29,10 +29,14 @@ window.onload = () => {
         Utils.sendOptionToTagList(dropdown, tagList, search);
     }
 
+    Utils.sendUpdatedListToCardSection(cardSection, tagList, search);
+
     searchBar.onUserInputChange(userInput => search.getSearchTerms(userInput));
-    tagList.onTagListChange(keywordList => {
-        console.log(keywordList)
-        search.getKeywordList(keywordList)
+    // tagList.onTagListChange(keywordList => {
+    //     console.log(keywordList)
+    //     search.getKeywordList(keywordList)
+    // });
+    search.onNewResults(results => {
+        results.forEach(result => cardSection.createCard(result));
     });
-    search.onNewResults(result => cardSection.createCard(result));
 }

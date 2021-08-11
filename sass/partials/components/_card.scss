@@ -3,6 +3,12 @@
     margin-bottom: 30px;
     text-overflow: ellipsis;
     overflow: hidden;
+    @include medium{
+        width: 48%;
+    }
+    @include small{
+        width: 100%;
+    }
 }
 
 figure{

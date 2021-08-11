@@ -15,11 +15,14 @@ export default class Search{
     }
 
     getKeywordList(keywordList) {
-        console.log(keywordList)
         this.searchRecipes(null, keywordList);
+        if (keywordList == null) {
+            this.searchRecipes(null, null);
+        }
     }
 
     searchRecipes(userInput, keywordList) {
+        console.log(keywordList)
         if (userInput !== null && userInput.length > 2) {
             recipes.filter(recipe => {
                 if (recipe.name.includes(userInput) || recipe.ingredients.includes(userInput) || recipe.description.includes(userInput)) {
@@ -29,10 +32,10 @@ export default class Search{
             });
         } else if (keywordList !== null) {
             keywordList.forEach(keyword => {
-                const keywordName = keyword.innerText;
-                const category = keyword.dataset['category'];
-                // const keywordName = keyword.keyword;
-                // const category = keyword.category;
+                // const keywordName = keyword.innerText;
+                // const category = keyword.dataset['category'];
+                const keywordName = keyword.keyword;
+                const category = keyword.category;
                 
                 recipes.forEach(recipe => {
                     if (category === 'ingredients') {
@@ -63,11 +66,11 @@ export default class Search{
             });
         } else {
             recipes.forEach(recipe => this.results.push(recipe));
-            // return recipes;
+            return this.results;
         }
 
         const newResults = [... new Set(this.results)];
-        // this.callbacks.forEach(cb => cb(newResults));
+        this.callbacks.forEach(cb => cb(newResults));
         console.log(newResults);
     }
 
@@ -77,7 +80,6 @@ export default class Search{
 
     onNewResults(cb) {
         this.callbacks.push(cb);
-        const newResults = this.getResults();
-        newResults.forEach(result => cb(result));
+        this.results.forEach(result => cb(result));
     }
 }

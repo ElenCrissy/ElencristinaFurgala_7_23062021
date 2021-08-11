@@ -4,6 +4,7 @@ export default class CardSection{
     }
 
     createCard(recipe) {
+        console.log(recipe)
         const card = document.createElement('div');
         const cardFigure = document.createElement('figure');
         const cardImg = document.createElement('img');
@@ -34,6 +35,7 @@ export default class CardSection{
         recipeTime.append(recipeTimeClock, recipeTimeDetail);
 
         const ingredients = recipe.ingredients;
+        console.log(ingredients)
         let ingredientName;
         let quantity;
         let unit;
