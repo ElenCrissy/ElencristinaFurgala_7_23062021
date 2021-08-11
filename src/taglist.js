@@ -8,8 +8,8 @@ export default class TagList{
     createTagListDOM(){
         const tagListDom = document.createElement('div');
         tagListDom.classList.add('tag-list');
-        this.container.appendChild(tagListDom); 
-
+        this.container.appendChild(tagListDom);
+        console.log(this.getUpdatedList());
     }
 
     createTag(keyword, dropdown){
@@ -25,6 +25,7 @@ export default class TagList{
         // this.updatedList.push(keywordObj);
         this.updatedList.push(tag);
         
+
         tag.classList.add('tag', `${keywordWithoutSpace}`);
         tagCross.classList.add('cross', 'far', 'fa-times-circle');
         tag.append(document.createTextNode(`${keyword}`), tagCross);
@@ -51,6 +52,8 @@ export default class TagList{
             // const filteredUpdatedList = this.updatedList.filter(element => element.keyword !== keyword);
             const filteredUpdatedList = this.updatedList.filter(element => element !== tag);
             this.updatedList = filteredUpdatedList;
+
+            console.log(this.getUpdatedList());
             return this.updatedList
         });
 
@@ -86,27 +89,32 @@ export default class TagList{
 
             return this.updatedList
         }
+
+        console.log(this.getUpdatedList());
+        return this.updatedList
     }
 
     getUpdatedList() {
+        console.log(this.updatedList);
         return this.updatedList;
     }
 
     onTagListChange(cb) {
         this.callbacks.push(cb);
-        this.updatedList.forEach(element => {
-            element.addEventListener('click', (e) => {
-                const tagListDOM = document.querySelector('.tag-list');
-                const hasChildWithKeywordClass = tagListDOM.querySelector(`.${keywordWithoutSpace}`);
+        // this.updatedList.forEach(element => {
+        //     element.addEventListener('click', (e) => {
+        //         const tagListDOM = document.querySelector('.tag-list');
+        //         const hasChildWithKeywordClass = tagListDOM.querySelector(`.${keywordWithoutSpace}`);
 
-                this.removeSameTag(element, element.innerText, hasChildWithKeywordClass);
-                console.log('in', this.updatedList)
+        //         this.removeSameTag(element, element.innerText, hasChildWithKeywordClass);
+        //         console.log('in', this.updatedList)
 
-                return this.updatedList
-            })
-        })
-        console.log('out', this.updatedList)
-
-        cb(this.updatedList);
+        //         return this.updatedList
+        //     })
+        // })
+        // console.log('out', this.updatedList)
+        const truc = this.getUpdatedList();
+        console.log('here', truc);
+        cb(truc);
     }
 }
