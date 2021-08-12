@@ -35,7 +35,6 @@ export default class CardSection{
         recipeTime.append(recipeTimeClock, recipeTimeDetail);
 
         const ingredients = recipe.ingredients;
-        console.log(ingredients)
         let ingredientName;
         let quantity;
         let unit;

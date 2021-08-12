@@ -27,9 +27,10 @@ window.onload = () => {
         dropdown.createDropdownDOM();
         Utils.filterDropdown(dropdown, options);
         Utils.sendOptionToTagList(dropdown, tagList, search);
+        Utils.sendUpdatedListToCardSection(cardSection, tagList, search, dropdown);
+
     }
 
-    Utils.sendUpdatedListToCardSection(cardSection, tagList, search);
 
     searchBar.onUserInputChange(userInput => search.getSearchTerms(userInput));
     // tagList.onTagListChange(keywordList => {

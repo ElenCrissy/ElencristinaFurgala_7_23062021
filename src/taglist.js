@@ -50,7 +50,7 @@ export default class TagList{
             const filteredUpdatedList = this.updatedList.filter(element => element.keyword !== keyword);
             // const filteredUpdatedList = this.updatedList.filter(element => element !== tag);
             this.updatedList = filteredUpdatedList;
-
+            this.getUpdatedList(this.updatedList);
             return this.updatedList
         });
 
@@ -83,6 +83,7 @@ export default class TagList{
             const filteredUpdatedList = this.updatedList.filter(element => element.keyword !== keyword);
             // const filteredUpdatedList = this.updatedList.filter(element => element.innerText !== tag.innerText);
             this.updatedList = filteredUpdatedList;
+            this.getUpdatedList(this.updatedList);
 
             return this.updatedList
         }
@@ -90,13 +91,18 @@ export default class TagList{
         return this.updatedList
     }
 
-    getUpdatedList() {
-        return this.updatedList;
+    getUpdatedList(list) {
+        console.log(list)
+        // this.onTagListChange(cb)
+        return list;
     }
 
     onTagListChange(cb) {
         this.callbacks.push(cb);
-        console.log('out', this.updatedList);
-        cb(this.updatedList);
+        this.updatedList.addEventListener('change', () => {
+            console.log('out', this.updatedList);
+            cb(this.updatedList);
+        })
+
     }
 }
