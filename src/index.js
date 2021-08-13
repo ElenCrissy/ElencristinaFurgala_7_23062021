@@ -20,6 +20,7 @@ window.onload = () => {
     searchBar.setSearchBar();
     tagList.createTagListDOM();
 
+    // pour chaque liste, crée dropdown
     for (let list in lists) {
         const category = list;
         const options = lists[list];
@@ -32,6 +33,7 @@ window.onload = () => {
     }
 
 
+    // à chaque changement de la valeur de l'input, la fonctionnalité search est lancée
     searchBar.onUserInputChange(userInput => search.getSearchTerms(userInput));
     // tagList.onTagListChange(keywordList => {
     //     console.log(keywordList)

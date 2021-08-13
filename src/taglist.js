@@ -17,6 +17,7 @@ export default class TagList{
         const tagCross = document.createElement('i');
         const keywordWithoutSpace = keyword.replace(/\s+/g, '');
         const hasChildWithKeywordClass = tagListDOM.querySelector(`.${keywordWithoutSpace}`);
+        
         const keywordObj = {
             keyword : `${keyword}`,
             category : `${dropdown.dropdownName}`
