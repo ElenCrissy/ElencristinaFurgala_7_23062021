@@ -27,7 +27,7 @@ window.onload = () => {
         dropdown.createDropdownDOM();
         Utils.filterDropdown(dropdown, options);
         Utils.sendOptionToTagList(dropdown, tagList, search);
-        Utils.sendUpdatedListToCardSection(cardSection, tagList, search, dropdown);
+        // Utils.sendUpdatedListToCardSection(cardSection, tagList, search, dropdown);
 
     }
 
@@ -38,6 +38,7 @@ window.onload = () => {
     //     search.getKeywordList(keywordList)
     // });
     search.onNewResults(results => {
-        results.forEach(result => cardSection.createCard(result));
+        cardSection.removeDuplicates();
+        cardSection.createCardBlock(results);
     });
 }

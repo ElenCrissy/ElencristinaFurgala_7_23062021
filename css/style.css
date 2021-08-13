@@ -40,8 +40,8 @@ body {
 }
 
 .card {
-  width: 31%;
-  margin-bottom: 30px;
+  width: 29%;
+  margin: 17px 18px;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -290,6 +290,11 @@ input:focus {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+.cards-section .card-block {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /*# sourceMappingURL=style.css.map */

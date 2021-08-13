@@ -79,19 +79,19 @@ export function sendOptionToTagList(dropdown, tagList, search) {
 
         
         // problème quand tag retiré par croix, modif pas prise en compte 
-        // tagList.onTagListChange(keywordList => {
-        //     console.log('keywordList', keywordList)
-        //     search.getKeywordList(keywordList); 
-        // });
+        tagList.onTagListChange(keywordList => {
+            console.log('keywordList', keywordList)
+            search.getKeywordList(keywordList); 
+        });
         return tagList;
     });
 }
 
 
-export function sendUpdatedListToCardSection(cardSection, tagList, search) {
-    tagList.onTagListChange(keywordList => {
-        console.log('keywordList', keywordList)
-        search.getKeywordList(keywordList); 
-    });
-    console.log(tagList.onTagListChange(this.updatedList));
-}
+// export function sendUpdatedListToCardSection(cardSection, tagList, search) {
+//     tagList.onTagListChange(keywordList => {
+//         console.log('keywordList', keywordList)
+//         search.getKeywordList(keywordList); 
+//     });
+//     console.log(tagList.onTagListChange(this.updatedList));
+// }

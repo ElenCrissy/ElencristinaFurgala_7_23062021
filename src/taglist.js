@@ -99,10 +99,8 @@ export default class TagList{
 
     onTagListChange(cb) {
         this.callbacks.push(cb);
-        this.updatedList.addEventListener('change', () => {
-            console.log('out', this.updatedList);
-            cb(this.updatedList);
-        })
+        console.log('out', this.updatedList);
+        cb(this.updatedList);
 
     }
 }

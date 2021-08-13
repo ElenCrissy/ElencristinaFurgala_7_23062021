@@ -3,8 +3,14 @@ export default class CardSection{
         this.container = container;
     }
 
+    createCardBlock(recipes) {
+        const cardBlock = document.createElement('div');
+        cardBlock.classList.add('card-block');
+        this.container.appendChild(cardBlock);
+        recipes.forEach(recipe => this.createCard(recipe));
+    }
+
     createCard(recipe) {
-        console.log(recipe)
         const card = document.createElement('div');
         const cardFigure = document.createElement('figure');
         const cardImg = document.createElement('img');
@@ -70,8 +76,16 @@ export default class CardSection{
         cardCaption.append(recipeTitleTime, recipeIngredientsDescription);
         cardFigure.append(cardImg, cardCaption);
         card.append(cardFigure);
-        this.container.appendChild(card);
+
+        const cardBlock = document.querySelector('.card-block');
+        cardBlock.appendChild(card);
 
         return card;
+    }
+
+    removeDuplicates() {
+        while (this.container.firstChild) {
+            this.container.removeChild(this.container.firstChild);
+        }
     }
 }
