@@ -19,6 +19,7 @@ window.onload = () => {
 
     searchBar.setSearchBar();
     tagList.createTagListDOM();
+    cardSection.createCardBlock(recipes);
 
     // pour chaque liste, crée dropdown
     for (let list in lists) {
@@ -26,19 +27,21 @@ window.onload = () => {
         const options = lists[list];
         const dropdown = new Dropdown(dropdownContainer, category, options);
         dropdown.createDropdownDOM();
+        // filtrage de la liste des options
         Utils.filterDropdown(dropdown, options);
+        // options sélectionnées, envoyées à la liste des tags
         Utils.sendOptionToTagList(dropdown, tagList, search);
-        // Utils.sendUpdatedListToCardSection(cardSection, tagList, search, dropdown);
-
     }
 
 
     // à chaque changement de la valeur de l'input, la fonctionnalité search est lancée
-    searchBar.onUserInputChange(userInput => search.getSearchTerms(userInput));
-    // tagList.onTagListChange(keywordList => {
-    //     console.log(keywordList)
-    //     search.getKeywordList(keywordList)
-    // });
+    searchBar.onUserInputChange(userInput => search.setSearchTerms(userInput));
+    // à chaque mise à jour de la liste des tags, la fonctionnalité search est lancée
+    tagList.onTagListChange(keywordList => {
+        // console.log(keywordList);
+        search.setKeywordList(keywordList);
+    });
+    // à chaque nouveau résultat issu de la recherche, la section cartes est mise à jour
     search.onNewResults(results => {
         cardSection.removeDuplicates();
         cardSection.createCardBlock(results);

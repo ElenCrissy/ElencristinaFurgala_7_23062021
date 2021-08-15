@@ -4,36 +4,35 @@ export default class Search{
     constructor() {
         this.callbacks = [];
         this.results = [];
+        this.userInput;
+        this.keywordList = [];
     }
 
-    getSearchTerms(userInput) {
-        if(userInput.length > 2) {
-            this.searchRecipes(userInput, null);
-        } else {
-            this.searchRecipes(null, null);
-        }
+    setSearchTerms(userInput) {
+        this.userInput = userInput;
+        this.results = Search.searchRecipes(this.userInput, this.keywordList, recipes);
+        this.triggerCallbacks();
     }
 
-    getKeywordList(keywordList) {
-        this.searchRecipes(null, keywordList);
-        if (keywordList == null) {
-            this.searchRecipes(null, null);
-        }
+    setKeywordList(keywordList) {
+        this.keywordList = keywordList;
+        this.results = Search.searchRecipes(this.userInput, this.keywordList, recipes);
+        this.triggerCallbacks();
     }
 
-    searchRecipes(userInput, keywordList) {
-        console.log(keywordList)
-        if (userInput !== null && userInput.length > 2) {
+    static searchRecipes(userInput, keywordList, recipes) {
+        let results = [];
+
+        if (userInput !== undefined && userInput.length > 2) {
             recipes.filter(recipe => {
                 if (recipe.name.includes(userInput) || recipe.ingredients.includes(userInput) || recipe.description.includes(userInput)) {
-                    console.log(recipe);
-                    this.results.push(recipe);
+                    results.push(recipe);
                 }
             });
-        } else if (keywordList !== null) {
+        }
+        
+        if (keywordList !== null) {
             keywordList.forEach(keyword => {
-                // const keywordName = keyword.innerText;
-                // const category = keyword.dataset['category'];
                 const keywordName = keyword.keyword;
                 const category = keyword.category;
                 
@@ -43,21 +42,18 @@ export default class Search{
                         recipeIngredients.forEach(ingredient => {
                             const ingredientName = ingredient.ingredient;
                             if (ingredientName.toLowerCase().includes(keywordName.toLowerCase())) {
-                                this.results.push(recipe);
-                                return this.results
+                                results.push(recipe);
                             };
                         })
-                    } else if (category === 'appliance') {
+                    } else if (category === 'appareils') {
                         if (recipe.appliance.toLowerCase().includes(keywordName.toLowerCase())) {
-                            this.results.push(recipe);
-                            return this.results
+                            results.push(recipe);
                         };
-                    } else if (category === 'ustensils') {
+                    } else if (category === 'ustensiles') {
                         const recipeUstensils = recipe.ustensils;
                         recipeUstensils.forEach(ustensil => {
                             if(ustensil.toLowerCase().includes(keywordName.toLowerCase())) {
-                                this.results.push(recipe);
-                                return this.results
+                                results.push(recipe);
                             }
                         })
                     }                
@@ -65,13 +61,11 @@ export default class Search{
 
             });
         } else {
-            recipes.forEach(recipe => this.results.push(recipe));
-            return this.results;
+            recipes.forEach(recipe => results.push(recipe));
         }
 
-        const newResults = [... new Set(this.results)];
-        this.callbacks.forEach(cb => cb(newResults));
-        console.log(newResults);
+        results = [... new Set(results)];
+        return results;
     }
 
     getResults() {
@@ -80,6 +74,9 @@ export default class Search{
 
     onNewResults(cb) {
         this.callbacks.push(cb);
-        this.results.forEach(result => cb(result));
+    }
+
+    triggerCallbacks() {
+        this.callbacks.forEach(cb => cb(this.results));
     }
 }
