@@ -60,7 +60,7 @@ export function filterDropdown(dropdown) {
 }
 
 // au clic sur une option, tagList crée un tag correspondant à l'option
-export function sendOptionToTagList(dropdown, tagList, search) {
+export function sendOptionToTagList(dropdown, tagList) {
     dropdown.onClickOption(option => {
         tagList.createTag(option, dropdown);
         return tagList;

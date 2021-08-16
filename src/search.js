@@ -24,12 +24,20 @@ export default class Search{
         let results = [];
 
         if (userInput !== undefined && userInput.length > 2) {
-            recipes.filter(recipe => {
+            // recipes.filter(recipe => {
+            //     if (recipe.name.includes(userInput) || recipe.ingredients.includes(userInput) || recipe.description.includes(userInput)) {
+            //         results.push(recipe);
+            //     }
+            // });
+            recipes.forEach(recipe => {
                 if (recipe.name.includes(userInput) || recipe.ingredients.includes(userInput) || recipe.description.includes(userInput)) {
                     results.push(recipe);
                 }
             });
-        }
+        } 
+        // else if (userInput == null) {
+        //     recipes.forEach(recipe => results.push(recipe));
+        // }
         
         if (keywordList !== null) {
             keywordList.forEach(keyword => {
@@ -60,9 +68,10 @@ export default class Search{
                 });
 
             });
-        } else {
-            recipes.forEach(recipe => results.push(recipe));
-        }
+        } 
+        // else if (keywordList == null) {
+        //     recipes.forEach(recipe => results.push(recipe));
+        // }
 
         results = [... new Set(results)];
         return results;
