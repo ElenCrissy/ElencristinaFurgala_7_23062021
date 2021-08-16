@@ -34,10 +34,9 @@ export default class Search{
                     results.push(recipe);
                 }
             });
-        } 
-        // else if (userInput == null) {
-        //     recipes.forEach(recipe => results.push(recipe));
-        // }
+        } else if ((userInput == null || userInput.length < 2) && keywordList == null) {
+            recipes.forEach(recipe => results.push(recipe));
+        }
         
         if (keywordList !== null) {
             keywordList.forEach(keyword => {
@@ -68,10 +67,13 @@ export default class Search{
                 });
 
             });
-        } 
-        // else if (keywordList == null) {
-        //     recipes.forEach(recipe => results.push(recipe));
-        // }
+        }
+
+        if (keywordList == undefined){
+            recipes.forEach(recipe => results.push(recipe));
+        }
+
+        console.log('yo')
 
         results = [... new Set(results)];
         return results;
