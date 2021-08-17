@@ -1,10 +1,10 @@
 import {recipes} from '../recipes.js';
 import OptionList from './OptionList.js';
 
-export function getIngredientsList() {
+export function getIngredientsList(data) {
     let ingredientList = [];
-    recipes.forEach(recipe =>{
-        const recipeIngredients = recipe.ingredients;
+    data.forEach(element =>{
+        const recipeIngredients = element.ingredients;
         recipeIngredients.forEach(ingredient => {
             ingredientList.push(ingredient.ingredient);
         });
@@ -13,28 +13,28 @@ export function getIngredientsList() {
     return ingredientList;
 }
 
-export function getAppliancesList() {
+export function getAppliancesList(data) {
     let applianceList = [];
-    recipes.forEach(recipe =>{
-        applianceList.push(recipe.appliance);
+    data.forEach(element =>{
+        applianceList.push(element.appliance);
     });
     applianceList = [... new Set(applianceList)];
     return applianceList;
 }
 
-export function getUstensilsList() {
+export function getUstensilsList(data) {
     let ustensilList = [];
-    recipes.forEach(recipe => {
-        recipe.ustensils.forEach(ustensil => ustensilList.push(ustensil));
+    data.forEach(element => {
+        element.ustensils.forEach(ustensil => ustensilList.push(ustensil));
     });
     ustensilList = [... new Set(ustensilList)];
     return ustensilList;
 }
 
-export function getLists() {
-    const ingredientList = getIngredientsList();
-    const appliancesList = getAppliancesList();
-    const ustensilsList = getUstensilsList();
+export function getLists(data) {
+    const ingredientList = getIngredientsList(data);
+    const appliancesList = getAppliancesList(data);
+    const ustensilsList = getUstensilsList(data);
 
     const listsObj = {
         ingredients : ingredientList,
@@ -52,6 +52,7 @@ export function filterDropdown(dropdown) {
         if (inputValue.length > 2) {
             const updatedOptions = optionList.getOptions(inputValue);
             dropdown.setOptions(updatedOptions);
+            console.log('hey')
         } else if (inputValue < 2) {
             dropdown.setOptions(initialOptions);
         } 
@@ -65,4 +66,15 @@ export function sendOptionToTagList(dropdown, tagList) {
         tagList.createTag(option, dropdown);
         return tagList;
     });
+}
+
+// met à jour la liste des options de chaque dropdown à chaque nouveau résultat de la recherche  
+export function updateDropdownOptionListWithSearchResults(results, dropdown) {
+    const lists = getLists(results);
+    for (let [key, value] of Object.entries(lists)) {
+        if(key === dropdown.dropdownName) {
+            dropdown.setOptions(value)
+        }
+    }
+    
 }

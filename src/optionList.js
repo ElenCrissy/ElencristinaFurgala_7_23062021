@@ -5,16 +5,11 @@ export default class OptionList{
 
     getOptions(inputValue) {
         const matchingOptions = [];
-        // if (inputValue === undefined) {
-        //     console.log(this.options);
-        //     return this.options;
-        // } else {
-            this.options.forEach(option => {
-                if (option.toLowerCase().includes(inputValue)) {
-                    matchingOptions.push(option);
-                }
-            });
-        // }
+        this.options.forEach(option => {
+            if (option.toLowerCase().includes(inputValue)) {
+                matchingOptions.push(option);
+            }
+        });
         return matchingOptions; 
 
     }

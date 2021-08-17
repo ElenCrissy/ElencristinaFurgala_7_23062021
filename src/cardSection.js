@@ -2,7 +2,7 @@ export default class CardSection{
     constructor(container) {
         this.container = container;
     }
-
+    
     createCardBlock(recipes) {
         const cardBlock = document.createElement('div');
         cardBlock.classList.add('card-block');
@@ -83,9 +83,22 @@ export default class CardSection{
         return card;
     }
 
-    removeDuplicates() {
-        while (this.container.firstChild) {
-            this.container.removeChild(this.container.firstChild);
+    removePreviousCardBlock() {
+        while (this.container.childNodes.length > 1) {
+            const truc = this.container.querySelector('.card-block');
+            truc.remove();
         }
     }
+
+    createNoResultMessage() {
+        const noResultMessage = document.createElement('div');
+        noResultMessage.classList.add('no-result-message');
+        noResultMessage.appendChild(document.createTextNode('Aucune recette ne correspond à votre critère... Vous pouvez chercher "tartes aux pommes", "poissons", etc...'));
+        this.container.appendChild(noResultMessage);
+    }
+
+    // displayNoResultMessage() {
+    //     const noResultMessage = document.querySelector('.no-result-message');
+    //     noResultMessage.style.display = 'none';
+    // }
 }

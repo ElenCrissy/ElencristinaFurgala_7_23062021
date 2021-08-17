@@ -296,5 +296,8 @@ input:focus {
   display: flex;
   flex-wrap: wrap;
 }
+.cards-section .no-result-message {
+  display: none;
+}
 
 /*# sourceMappingURL=style.css.map */

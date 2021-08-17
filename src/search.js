@@ -21,6 +21,7 @@ export default class Search{
     }
 
     static searchRecipes(userInput, keywordList, recipes) {
+        const noResultMessage = document.querySelector('.no-result-message');
         let results = [];
 
         if (userInput !== undefined && userInput.length > 2) {
@@ -34,8 +35,6 @@ export default class Search{
                     results.push(recipe);
                 }
             });
-        } else if ((userInput == null || userInput.length < 2) && keywordList == null) {
-            recipes.forEach(recipe => results.push(recipe));
         }
         
         if (keywordList !== null) {
@@ -69,13 +68,17 @@ export default class Search{
             });
         }
 
-        if (keywordList == undefined){
-            recipes.forEach(recipe => results.push(recipe));
-        }
-
-        console.log('yo')
+        console.log(results)
 
         results = [... new Set(results)];
+
+        if (results.length == 0) {
+            recipes.forEach(recipe => results.push(recipe));
+            noResultMessage.style.display = 'block';
+        } else {
+            noResultMessage.style.display = 'none';
+        }
+
         return results;
     }
 
@@ -83,10 +86,12 @@ export default class Search{
         return this.results
     }
 
+    // à chaque nouveau résultat, callback est ajoutée au tableau des callbacks
     onNewResults(cb) {
         this.callbacks.push(cb);
     }
 
+    // déclenchement des callbacks
     triggerCallbacks() {
         this.callbacks.forEach(cb => cb(this.results));
     }

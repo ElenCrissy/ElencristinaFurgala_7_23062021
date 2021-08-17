@@ -15,10 +15,11 @@ window.onload = () => {
     const searchBar = new SearchBar();
     const tagList = new TagList(tagContainer);
     const cardSection = new CardSection(cardSectionContainer);
-    const lists = Utils.getLists();
+    const lists = Utils.getLists(recipes);
 
     searchBar.setSearchBar();
     tagList.createTagListDOM();
+    cardSection.createNoResultMessage();
     cardSection.createCardBlock(recipes);
 
     // pour chaque liste, crée dropdown
@@ -31,6 +32,10 @@ window.onload = () => {
         Utils.filterDropdown(dropdown, options);
         // options sélectionnées, envoyées à la liste des tags
         Utils.sendOptionToTagList(dropdown, tagList, search);
+        // à chaque nouveau résultat de la recherche, liste options dropdown mise à jour
+        search.onNewResults(results => {
+            Utils.updateDropdownOptionListWithSearchResults(results, dropdown);
+        })
     }
 
 
@@ -43,7 +48,7 @@ window.onload = () => {
     });
     // à chaque nouveau résultat issu de la recherche, la section cartes est mise à jour
     search.onNewResults(results => {
-        cardSection.removeDuplicates();
+        cardSection.removePreviousCardBlock();
         cardSection.createCardBlock(results);
     });
 }

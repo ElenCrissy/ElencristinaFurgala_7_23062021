@@ -29,8 +29,8 @@ export default class Dropdown {
         arrow.classList.add('arrow');
 
         optionListContainer.classList.add(`${this.dropdownName}-color`);
+        optionListContainer.classList.add(`${this.dropdownName}-options`, 'option-list-container');
         optionListDom.classList.add(`${this.dropdownName}-color`);
-        optionListContainer.classList.add('option-list-container');
         optionListDom.classList.add('option-list');
         optionListDom.setAttribute('id', 'col');
     
@@ -64,9 +64,13 @@ export default class Dropdown {
         const optionDOM = document.createElement('div');
         option = option[0].toUpperCase() + option.slice(1);
         optionDOM.appendChild(document.createTextNode(`${option}`));
-        optionDOM.classList.add('option');
+        optionDOM.classList.add('option', `${this.dropdownName}-option`);
         optionDOM.dataset['option'] = `${option}`;
         optionContainer.appendChild(optionDOM);
+
+        optionDOM.addEventListener('click', () => {
+            this.callback.forEach(cb => cb(option));
+        });
     }
 
     openDropdown(dropdownDOM) {
@@ -119,13 +123,6 @@ export default class Dropdown {
     }
 
     onClickOption(cb) {
-        const dropdown = document.querySelector(`.${this.dropdownName}`);
-        const optionsDOM = dropdown.querySelectorAll('.option');
-        optionsDOM.forEach(option => {
-            const optionContent = option.innerHTML;
-            option.addEventListener('click', () => {
-                cb(optionContent, dropdown);
-            })
-        })
+        this.callback.push(cb);
     }
 }
