@@ -25,16 +25,34 @@ export default class Search{
         let results = [];
 
         if (userInput !== undefined && userInput.length > 2) {
+            console.log(userInput)
+
             // recipes.filter(recipe => {
             //     if (recipe.name.includes(userInput) || recipe.ingredients.includes(userInput) || recipe.description.includes(userInput)) {
             //         results.push(recipe);
             //     }
             // });
-            recipes.forEach(recipe => {
-                if (recipe.name.includes(userInput) || recipe.ingredients.includes(userInput) || recipe.description.includes(userInput)) {
-                    results.push(recipe);
+
+            for(let i = 0; i < recipes.length; i++) {
+                const recipeIngredients = recipes[i].ingredients;
+
+                if(recipes[i].name.indexOf(userInput) !== -1 || recipes[i].description.indexOf(userInput) !== -1) {
+                  results.push(recipes[i]);
                 }
-            });
+
+                for (let i = 0; i < recipeIngredients.length; i++) {
+                    const ingredient = recipeIngredients[i].ingredient;
+                    if (ingredient.indexOf(userInput) !== -1) {
+                        results.push(recipes[i]);
+                    }
+                }
+            };
+
+            // recipes.forEach(recipe => {
+            //     if (recipe.name.includes(userInput) || recipe.ingredients.includes(userInput) || recipe.description.includes(userInput)) {
+            //         results.push(recipe);
+            //     }
+            // });
         }
         
         if (keywordList !== null) {
@@ -67,8 +85,6 @@ export default class Search{
 
             });
         }
-
-        console.log(results)
 
         results = [... new Set(results)];
 
