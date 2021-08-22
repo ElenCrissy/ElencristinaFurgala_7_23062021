@@ -37,6 +37,30 @@ export default class Search{
                 const recipeIngredients = recipes[i].ingredients;
 
                 // sans utiliser indexOf
+                // const fruits = ['fraise', 'pomme', 'melon', 'orange', 'kiwi', 'pastèque', 'noix de coco', 'poire', 'ananas', 'pamplemousse', 'citron', 'framboise', 'papaye', 'banane', 'litchi', 'prune', 'abricot', 'mangue'];
+
+                // const string = 'ran';
+
+
+                // for (let i = 0; i < fruits.length; i++) {
+                // const fruit = fruits[i];
+                    
+                //     for (let j = 0; j < fruit.length; j++) {
+                //     const letter = fruit[j];
+                //     const nextLetterFruit = fruit[j+1];
+                    
+                //     for (let k = 0; k < string.length; k++){
+                        
+                //         if (letter === string[k]){
+                //         if()
+
+                //         }
+                //     }
+                    
+                    
+                //     }
+                // }
+
                 if(recipes[i].name.indexOf(userInput) !== -1 || recipes[i].description.indexOf(userInput) !== -1) {
                   results.push(recipes[i]);
                 }
