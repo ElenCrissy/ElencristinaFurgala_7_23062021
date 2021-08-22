@@ -36,6 +36,7 @@ export default class Search{
             for(let i = 0; i < recipes.length; i++) {
                 const recipeIngredients = recipes[i].ingredients;
 
+                // sans utiliser indexOf
                 if(recipes[i].name.indexOf(userInput) !== -1 || recipes[i].description.indexOf(userInput) !== -1) {
                   results.push(recipes[i]);
                 }
