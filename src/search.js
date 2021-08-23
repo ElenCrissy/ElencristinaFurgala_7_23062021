@@ -102,12 +102,12 @@ export default class Search{
 
         recipes.forEach(recipe => {
             const name = recipe.name;
-            let ingredients = [];
+            let ingredientsArr = [];
             const recipeIngredients = recipe.ingredients;
-            recipeIngredients.forEach(ingredient => ingredients.push(ingredient.ingredient));
+            recipeIngredients.forEach(ingredient => ingredientsArr.push(ingredient.ingredient));
             const description = recipe.description;
-            ingredients = ingredients.toString();
-            const recipeElements = [name, ingredients, description];
+            ingredientsArr = ingredientsArr.toString();
+            const recipeElements = [name, ingredientsArr, description];
 
             let counter = 0;
             recipeElements.forEach(element => {
@@ -117,7 +117,7 @@ export default class Search{
             });
 
             const recipeCounter = {
-                id: recipe.name,
+                id: recipe.id,
                 counter: counter
             };
             resultsToBeSorted.push(recipeCounter);
