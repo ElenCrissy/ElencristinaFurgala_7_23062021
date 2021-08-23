@@ -12,6 +12,9 @@ export default class Search{
         this.userInput = userInput;
         this.results = Search.searchRecipes(this.userInput, this.keywordList, recipes);
         this.triggerCallbacks();
+        this.results.forEach(result => {
+            this.countTermsInRecipe(userInput, result);
+        });
     }
 
     setKeywordList(keywordList) {
@@ -68,8 +71,6 @@ export default class Search{
             });
         }
 
-        console.log(results)
-
         results = [... new Set(results)];
 
         if (results.length == 0) {
@@ -94,5 +95,32 @@ export default class Search{
     // déclenchement des callbacks
     triggerCallbacks() {
         this.callbacks.forEach(cb => cb(this.results));
+    }
+
+    countTermsInRecipe(term, recipe) {
+        const name = recipe.name;
+        let ingredients = [];
+        const recipeIngredients = recipe.ingredients;
+        recipeIngredients.forEach(ingredient => ingredients.push(ingredient.ingredient));
+        const description = recipe.description;
+        ingredients = ingredients.toString();
+        const recipeElements = [name, ingredients, description];
+        let counter = 0;
+        recipeElements.forEach(element => {
+            if(element.includes(term)){
+                counter++
+            }
+        });
+        console.log(recipeElements, counter)
+
+
+        // let counter = 0;
+        // for (let [key, value] of Object.entries(recipe)) {
+        //     console.log('truc', value)
+
+        //     // if (i.includes(term)){
+        //     //     counter++
+        //     // }
+        // }
     }
 }
