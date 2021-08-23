@@ -9,12 +9,12 @@ export default class Search{
     }
 
     setSearchTerms(userInput) {
+        console.log('stop')
         this.userInput = userInput;
-        this.results = Search.searchRecipes(this.userInput, this.keywordList, recipes);
+        const searchResults = Search.searchRecipes(this.userInput, this.keywordList, recipes);
+        this.results = this.countTermsInRecipes(this.userInput, searchResults);
+        console.log(this.results);
         this.triggerCallbacks();
-        this.results.forEach(result => {
-            this.countTermsInRecipe(userInput, result);
-        });
     }
 
     setKeywordList(keywordList) {
@@ -97,30 +97,44 @@ export default class Search{
         this.callbacks.forEach(cb => cb(this.results));
     }
 
-    countTermsInRecipe(term, recipe) {
-        const name = recipe.name;
-        let ingredients = [];
-        const recipeIngredients = recipe.ingredients;
-        recipeIngredients.forEach(ingredient => ingredients.push(ingredient.ingredient));
-        const description = recipe.description;
-        ingredients = ingredients.toString();
-        const recipeElements = [name, ingredients, description];
-        let counter = 0;
-        recipeElements.forEach(element => {
-            if(element.includes(term)){
-                counter++
-            }
+    countTermsInRecipes(term, recipes) {
+        let resultsToBeSorted = [];
+
+        recipes.forEach(recipe => {
+            const name = recipe.name;
+            let ingredients = [];
+            const recipeIngredients = recipe.ingredients;
+            recipeIngredients.forEach(ingredient => ingredients.push(ingredient.ingredient));
+            const description = recipe.description;
+            ingredients = ingredients.toString();
+            const recipeElements = [name, ingredients, description];
+
+            let counter = 0;
+            recipeElements.forEach(element => {
+                if(element.includes(term)){
+                    counter++
+                }
+            });
+
+            const recipeCounter = {
+                id: recipe.name,
+                counter: counter
+            };
+            resultsToBeSorted.push(recipeCounter);
         });
-        console.log(recipeElements, counter)
 
+        this.sortResults(resultsToBeSorted);
+        return resultsToBeSorted;
+    }
 
-        // let counter = 0;
-        // for (let [key, value] of Object.entries(recipe)) {
-        //     console.log('truc', value)
-
-        //     // if (i.includes(term)){
-        //     //     counter++
-        //     // }
-        // }
+    sortResults(recipeCounters){
+        recipeCounters.sort(function (a, b) {
+            if (a.counter < b.counter)
+                return 1;
+            if (a.counter > b.counter )
+                return -1;
+            return 0;
+        })
+        return recipeCounters;
     }
 }
