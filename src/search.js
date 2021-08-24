@@ -11,16 +11,15 @@ export default class Search{
     setSearchTerms(userInput) {
         this.userInput = userInput;
         const searchResults = Search.searchRecipes(this.userInput, this.keywordList, recipes);
-        const sortedId = this.countTermsInRecipes(this.userInput, searchResults);
+        const sortedId = this.getSortedId(this.userInput, searchResults);
         this.results = this.getRevelantRecipesFromSortedId(sortedId);
         this.triggerCallbacks();
     }
 
     setKeywordList(keywordList) {
         this.keywordList = keywordList;
-        // this.results = Search.searchRecipes(this.userInput, this.keywordList, recipes);
         const searchResults = Search.searchRecipes(this.userInput, this.keywordList, recipes);
-        const sortedId = this.countTermsInRecipes(this.keywordList, searchResults);
+        const sortedId = this.getSortedId(this.keywordList, searchResults);
         this.results = this.getRevelantRecipesFromSortedId(sortedId);
         this.triggerCallbacks();
     }
@@ -36,7 +35,7 @@ export default class Search{
             //     }
             // });
             recipes.forEach(recipe => {
-                if (recipe.name.includes(userInput) || recipe.ingredients.includes(userInput) || recipe.description.includes(userInput)) {
+                if (recipe.name.toLowerCase().includes(userInput.toLowerCase()) || recipe.ingredients.includes(userInput.toLowerCase()) || recipe.description.toLowerCase().includes(userInput.toLowerCase())) {
                     results.push(recipe);
                 }
             });
@@ -99,13 +98,11 @@ export default class Search{
         this.callbacks.forEach(cb => cb(this.results));
     }
 
-    countTermsInRecipes(term, recipesFromSearch) {
+    getSortedId(term, recipesFromSearch) {
         let resultsToBeSorted = [];
 
         recipesFromSearch.forEach(recipe => {
 
-            let recipeElementsSearchTerm = [];
-            let recipeElementsKeywordList = [];
             let counter = 0;
             
             if (term === this.userInput) {
@@ -115,69 +112,39 @@ export default class Search{
                 recipeIngredients.forEach(ingredient => ingredientsArr.push(ingredient.ingredient));
                 const description = recipe.description;
                 ingredientsArr = ingredientsArr.toString();
-                recipeElementsSearchTerm.push(name, ingredientsArr, description);
-                recipeElementsSearchTerm.forEach(element => {
-                    if(element.includes(term)){
-                        counter++;
-                    };
-                })
+                let recipeElements = [];
+                recipeElements.push(name, ingredientsArr, description);
+                const recipeElementsStringified = JSON.stringify(recipeElements);
+                counter = this.countOccurencies(recipeElementsStringified, term);
             }
 
             if (term === this.keywordList) {
                 const fullRecipe = JSON.stringify(recipe);
-                console.log(fullRecipe)
-                recipeElementsKeywordList.push(fullRecipe);
-                recipeElementsKeywordList.forEach(element => {
-                    if (element.includes(term)) {
-                        counter++;
-                    }
+                term.forEach(termElement => {
+                    counter = this.countOccurencies(fullRecipe, termElement.keyword);
                 });
             }
-
-            // if (searchTerm !== undefined && searchTerm.length > 2) {
-            //     const name = recipe.name;
-            //     let ingredientsArr = [];
-            //     const recipeIngredients = recipe.ingredients;
-            //     recipeIngredients.forEach(ingredient => ingredientsArr.push(ingredient.ingredient));
-            //     const description = recipe.description;
-            //     ingredientsArr = ingredientsArr.toString();
-            //     recipeElements.push(name, ingredientsArr, description);
-            // }
-
-            // if (keywordList !== undefined && keywordList.length > 0) {
-            //     const fullRecipe = JSON.stringify(recipe);
-            //     recipeElements.push(fullRecipe);
-            // }
-
-            // let counter = 0;
-            // recipeElements.forEach(element => {
-            //     if(element.includes(searchTerm)){
-            //         counter++;
-            //     };
-
-            //     keywordList.forEach(keyword => {
-            //         if (element.includes(keyword)) {
-            //             counter++;
-            //         }
-            //     });
-            // });
 
             const recipeCounter = {
                 id: recipe.id,
                 counter: counter
             };
 
-            console.log(recipeCounter)
-
             resultsToBeSorted.push(recipeCounter);
         });
 
-        this.sortResults(resultsToBeSorted);
-        return resultsToBeSorted;
+        const sortedId = this.sortId(resultsToBeSorted);
+
+        return sortedId;
     }
 
-    sortResults(recipeCounters){
-        console.log(recipeCounters, 'yo')
+    // compte le nombre de fois que le terme apparaît dans une chaîne de caractère
+    countOccurencies(string, word) {
+        return string.split(word).length -1;
+    }
+
+    // tri en fonction du compteur
+    sortId(recipeCounters){
         recipeCounters.sort(function (a, b) {
             if (a.counter < b.counter)
                 return 1;
@@ -188,6 +155,7 @@ export default class Search{
         return recipeCounters;
     }
 
+    // récupère les recettes correspondant aux id des résultats triés
     getRevelantRecipesFromSortedId(sortedId){
         const relevantRecipes = [];
         sortedId.forEach(element => {
