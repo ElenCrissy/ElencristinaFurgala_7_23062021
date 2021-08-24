@@ -134,7 +134,6 @@ export default class Search{
         });
 
         const sortedId = this.sortId(resultsToBeSorted);
-
         return sortedId;
     }
 
