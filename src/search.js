@@ -9,17 +9,19 @@ export default class Search{
     }
 
     setSearchTerms(userInput) {
-        console.log('stop')
         this.userInput = userInput;
         const searchResults = Search.searchRecipes(this.userInput, this.keywordList, recipes);
-        this.results = this.countTermsInRecipes(this.userInput, searchResults);
-        console.log(this.results);
+        const sortedId = this.countTermsInRecipes(this.userInput, searchResults);
+        this.results = this.getRevelantRecipesFromSortedId(sortedId);
         this.triggerCallbacks();
     }
 
     setKeywordList(keywordList) {
         this.keywordList = keywordList;
-        this.results = Search.searchRecipes(this.userInput, this.keywordList, recipes);
+        // this.results = Search.searchRecipes(this.userInput, this.keywordList, recipes);
+        const searchResults = Search.searchRecipes(this.userInput, this.keywordList, recipes);
+        const sortedId = this.countTermsInRecipes(this.keywordList, searchResults);
+        this.results = this.getRevelantRecipesFromSortedId(sortedId);
         this.triggerCallbacks();
     }
 
@@ -97,29 +99,76 @@ export default class Search{
         this.callbacks.forEach(cb => cb(this.results));
     }
 
-    countTermsInRecipes(term, recipes) {
+    countTermsInRecipes(term, recipesFromSearch) {
         let resultsToBeSorted = [];
 
-        recipes.forEach(recipe => {
-            const name = recipe.name;
-            let ingredientsArr = [];
-            const recipeIngredients = recipe.ingredients;
-            recipeIngredients.forEach(ingredient => ingredientsArr.push(ingredient.ingredient));
-            const description = recipe.description;
-            ingredientsArr = ingredientsArr.toString();
-            const recipeElements = [name, ingredientsArr, description];
+        recipesFromSearch.forEach(recipe => {
 
+            let recipeElementsSearchTerm = [];
+            let recipeElementsKeywordList = [];
             let counter = 0;
-            recipeElements.forEach(element => {
-                if(element.includes(term)){
-                    counter++
-                }
-            });
+            
+            if (term === this.userInput) {
+                const name = recipe.name;
+                let ingredientsArr = [];
+                const recipeIngredients = recipe.ingredients;
+                recipeIngredients.forEach(ingredient => ingredientsArr.push(ingredient.ingredient));
+                const description = recipe.description;
+                ingredientsArr = ingredientsArr.toString();
+                recipeElementsSearchTerm.push(name, ingredientsArr, description);
+                recipeElementsSearchTerm.forEach(element => {
+                    if(element.includes(term)){
+                        counter++;
+                    };
+                })
+            }
+
+            if (term === this.keywordList) {
+                const fullRecipe = JSON.stringify(recipe);
+                console.log(fullRecipe)
+                recipeElementsKeywordList.push(fullRecipe);
+                recipeElementsKeywordList.forEach(element => {
+                    if (element.includes(term)) {
+                        counter++;
+                    }
+                });
+            }
+
+            // if (searchTerm !== undefined && searchTerm.length > 2) {
+            //     const name = recipe.name;
+            //     let ingredientsArr = [];
+            //     const recipeIngredients = recipe.ingredients;
+            //     recipeIngredients.forEach(ingredient => ingredientsArr.push(ingredient.ingredient));
+            //     const description = recipe.description;
+            //     ingredientsArr = ingredientsArr.toString();
+            //     recipeElements.push(name, ingredientsArr, description);
+            // }
+
+            // if (keywordList !== undefined && keywordList.length > 0) {
+            //     const fullRecipe = JSON.stringify(recipe);
+            //     recipeElements.push(fullRecipe);
+            // }
+
+            // let counter = 0;
+            // recipeElements.forEach(element => {
+            //     if(element.includes(searchTerm)){
+            //         counter++;
+            //     };
+
+            //     keywordList.forEach(keyword => {
+            //         if (element.includes(keyword)) {
+            //             counter++;
+            //         }
+            //     });
+            // });
 
             const recipeCounter = {
                 id: recipe.id,
                 counter: counter
             };
+
+            console.log(recipeCounter)
+
             resultsToBeSorted.push(recipeCounter);
         });
 
@@ -128,6 +177,7 @@ export default class Search{
     }
 
     sortResults(recipeCounters){
+        console.log(recipeCounters, 'yo')
         recipeCounters.sort(function (a, b) {
             if (a.counter < b.counter)
                 return 1;
@@ -136,5 +186,17 @@ export default class Search{
             return 0;
         })
         return recipeCounters;
+    }
+
+    getRevelantRecipesFromSortedId(sortedId){
+        const relevantRecipes = [];
+        sortedId.forEach(element => {
+            recipes.forEach(recipe => {
+                if (recipe.id === element.id) {
+                    relevantRecipes.push(recipe);
+                }
+            })
+        })
+        return relevantRecipes;
     }
 }
