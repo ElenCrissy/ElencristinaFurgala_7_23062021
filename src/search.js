@@ -151,6 +151,7 @@ export default class Search{
                 return -1;
             return 0;
         })
+        console.log(recipeCounters);
         return recipeCounters;
     }
 
@@ -164,6 +165,7 @@ export default class Search{
                 }
             })
         })
+        console.log(relevantRecipes)
         return relevantRecipes;
     }
 }
