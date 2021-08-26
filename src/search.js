@@ -10,23 +10,44 @@ export default class Search{
 
     setSearchTerms(userInput) {
         this.userInput = userInput;
-        this.results = Search.searchRecipes(this.userInput, this.keywordList, recipes);
+        this.results = this.searchRecipes(this.userInput, this.keywordList, recipes);
         this.triggerCallbacks();
     }
 
     setKeywordList(keywordList) {
         this.keywordList = keywordList;
-        this.results = Search.searchRecipes(this.userInput, this.keywordList, recipes);
+        this.results = this.searchRecipes(this.userInput, this.keywordList, recipes);
         this.triggerCallbacks();
     }
 
-    static searchRecipes(userInput, keywordList, recipes) {
+    includes(element, string) {
+        let isIncluded = false; 
+        for (let j = 0; j < element.length; j++) {
+
+            for(let k = 0; k < string.length; k++) {
+
+                const nextLetterElement = element[j+k];
+                const expectedLetter = string[k];
+
+                if (nextLetterElement !== expectedLetter) {
+                    break;
+                }
+                isIncluded = true;
+            }
+
+            if (isIncluded) {
+                break;
+            }
+
+        }
+        return isIncluded;
+    }
+
+    searchRecipes(userInput, keywordList, recipes) {
         const noResultMessage = document.querySelector('.no-result-message');
         let results = [];
 
         if (userInput !== undefined && userInput.length > 2) {
-            console.log(userInput)
-
             // recipes.filter(recipe => {
             //     if (recipe.name.includes(userInput) || recipe.ingredients.includes(userInput) || recipe.description.includes(userInput)) {
             //         results.push(recipe);
@@ -34,44 +55,25 @@ export default class Search{
             // });
 
             for(let i = 0; i < recipes.length; i++) {
+                const recipeName = recipes[i].name;
                 const recipeIngredients = recipes[i].ingredients;
+                const recipeIngredientsArr = [];
+                const recipeDescription = recipes[i].description; 
 
-                // sans utiliser indexOf
-                // const fruits = ['fraise', 'pomme', 'melon', 'orange', 'kiwi', 'pastèque', 'noix de coco', 'poire', 'ananas', 'pamplemousse', 'citron', 'framboise', 'papaye', 'banane', 'litchi', 'prune', 'abricot', 'mangue'];
+                for (let j = 0; j < recipeIngredients.length; j++) {
+                    const ingredient = recipeIngredients[j].ingredient;
 
-                // const string = 'ran';
-
-
-                // for (let i = 0; i < fruits.length; i++) {
-                // const fruit = fruits[i];
-                    
-                //     for (let j = 0; j < fruit.length; j++) {
-                //     const letter = fruit[j];
-                //     const nextLetterFruit = fruit[j+1];
-                    
-                //     for (let k = 0; k < string.length; k++){
-                        
-                //         if (letter === string[k]){
-                //         if()
-
-                //         }
-                //     }
-                    
-                    
-                //     }
-                // }
-
-                if(recipes[i].name.indexOf(userInput) !== -1 || recipes[i].description.indexOf(userInput) !== -1) {
-                  results.push(recipes[i]);
+                    recipeIngredientsArr.push(ingredient);
                 }
+                const recipeDetails = `${recipeName}, ${recipeIngredientsArr.toString()}, ${recipeDescription}`;
+                console.log(recipeDetails)
 
-                for (let i = 0; i < recipeIngredients.length; i++) {
-                    const ingredient = recipeIngredients[i].ingredient;
-                    if (ingredient.indexOf(userInput) !== -1) {
-                        results.push(recipes[i]);
-                    }
+                if (this.includes(recipeDetails, userInput)) {
+                    // console.log(recipes[i])
+                    results.push(recipes[i]);
                 }
             };
+            // console.log(results)
 
             // recipes.forEach(recipe => {
             //     if (recipe.name.includes(userInput) || recipe.ingredients.includes(userInput) || recipe.description.includes(userInput)) {
