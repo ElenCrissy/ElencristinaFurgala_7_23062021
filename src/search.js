@@ -11,16 +11,16 @@ export default class Search{
     setSearchTerms(userInput) {
         this.userInput = userInput;
         const searchResults = Search.searchRecipes(this.userInput, this.keywordList, recipes);
-        const sortedId = this.getSortedId(this.userInput, searchResults);
-        this.results = this.getRevelantRecipesFromSortedId(sortedId);
+        const sortedRecipeCounters = this.getSortedCounters(this.userInput, searchResults);
+        this.results = this.getRevelantRecipesFromSortedCounters(sortedRecipeCounters);
         this.triggerCallbacks();
     }
 
     setKeywordList(keywordList) {
         this.keywordList = keywordList;
         const searchResults = Search.searchRecipes(this.userInput, this.keywordList, recipes);
-        const sortedId = this.getSortedId(this.keywordList, searchResults);
-        this.results = this.getRevelantRecipesFromSortedId(sortedId);
+        const sortedRecipeCounters = this.getSortedCounters(this.keywordList, searchResults);
+        this.results = this.getRevelantRecipesFromSortedCounters(sortedRecipeCounters);
         this.triggerCallbacks();
     }
 
@@ -98,7 +98,7 @@ export default class Search{
         this.callbacks.forEach(cb => cb(this.results));
     }
 
-    getSortedId(term, recipesFromSearch) {
+    getSortedCounters(term, recipesFromSearch) {
         let resultsToBeSorted = [];
 
         recipesFromSearch.forEach(recipe => {
@@ -133,8 +133,8 @@ export default class Search{
             resultsToBeSorted.push(recipeCounter);
         });
 
-        const sortedId = this.sortId(resultsToBeSorted);
-        return sortedId;
+        const sortedRecipeCounters = this.sortCounters(resultsToBeSorted);
+        return sortedRecipeCounters;
     }
 
     // compte le nombre de fois que le terme apparaît dans une chaîne de caractère
@@ -143,7 +143,7 @@ export default class Search{
     }
 
     // tri en fonction du compteur
-    sortId(recipeCounters){
+    sortCounters(recipeCounters){
         recipeCounters.sort(function (a, b) {
             if (a.counter < b.counter)
                 return 1;
@@ -151,21 +151,16 @@ export default class Search{
                 return -1;
             return 0;
         })
-        console.log(recipeCounters);
         return recipeCounters;
     }
 
     // récupère les recettes correspondant aux id des résultats triés
-    getRevelantRecipesFromSortedId(sortedId){
+    getRevelantRecipesFromSortedCounters(counters){
         const relevantRecipes = [];
-        sortedId.forEach(element => {
-            recipes.forEach(recipe => {
-                if (recipe.id === element.id) {
-                    relevantRecipes.push(recipe);
-                }
-            })
+        counters.forEach(counter => {
+            const relevantRecipe = recipes.find(recipe => recipe.id === counter.id);
+            relevantRecipes.push(relevantRecipe);
         })
-        console.log(relevantRecipes)
         return relevantRecipes;
     }
 }
