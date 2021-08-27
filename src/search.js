@@ -30,9 +30,11 @@ export default class Search{
                 const expectedLetter = string[k];
 
                 if (nextLetterElement !== expectedLetter) {
+                    isIncluded = false;
                     break;
+                } else {
+                    isIncluded = true;
                 }
-                isIncluded = true;
             }
 
             if (isIncluded) {
@@ -48,38 +50,30 @@ export default class Search{
         let results = [];
 
         if (userInput !== undefined && userInput.length > 2) {
-            // recipes.filter(recipe => {
-            //     if (recipe.name.includes(userInput) || recipe.ingredients.includes(userInput) || recipe.description.includes(userInput)) {
-            //         results.push(recipe);
-            //     }
-            // });
 
+            // pour chaque recette, je crée un tableau avec le nom, les ingrédients et la description
             for(let i = 0; i < recipes.length; i++) {
                 const recipeName = recipes[i].name;
                 const recipeIngredients = recipes[i].ingredients;
                 const recipeIngredientsArr = [];
                 const recipeDescription = recipes[i].description; 
 
+                // j'ajoute chaque ingrédient de la recette au tableau d'ingrédients
                 for (let j = 0; j < recipeIngredients.length; j++) {
                     const ingredient = recipeIngredients[j].ingredient;
-
                     recipeIngredientsArr.push(ingredient);
                 }
-                const recipeDetails = `${recipeName}, ${recipeIngredientsArr.toString()}, ${recipeDescription}`;
-                console.log(recipeDetails)
 
+                // je crée une chaîne de caractère contenant les détails de la recette
+                const recipeDetails = `${recipeName}, ${recipeIngredientsArr.toString()}, ${recipeDescription}`;
+
+                // si les détails de la recette contiennent les termes recherchés alors la recette est ajoutée au tableau des résultats
                 if (this.includes(recipeDetails, userInput)) {
-                    // console.log(recipes[i])
+                    console.log(userInput)
+                    console.log(recipes[i])
                     results.push(recipes[i]);
                 }
             };
-            // console.log(results)
-
-            // recipes.forEach(recipe => {
-            //     if (recipe.name.includes(userInput) || recipe.ingredients.includes(userInput) || recipe.description.includes(userInput)) {
-            //         results.push(recipe);
-            //     }
-            // });
         }
         
         if (keywordList !== null) {
