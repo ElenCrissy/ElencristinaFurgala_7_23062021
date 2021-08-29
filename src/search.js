@@ -29,11 +29,6 @@ export default class Search{
         let results = [];
 
         if (userInput !== undefined && userInput.length > 2) {
-            // recipes.filter(recipe => {
-            //     if (recipe.name.includes(userInput) || recipe.ingredients.includes(userInput) || recipe.description.includes(userInput)) {
-            //         results.push(recipe);
-            //     }
-            // });
             recipes.forEach(recipe => {
                 if (recipe.name.toLowerCase().includes(userInput.toLowerCase()) || recipe.ingredients.includes(userInput.toLowerCase()) || recipe.description.toLowerCase().includes(userInput.toLowerCase())) {
                     results.push(recipe);
