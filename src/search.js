@@ -69,8 +69,6 @@ export default class Search{
 
                 // si les détails de la recette contiennent les termes recherchés alors la recette est ajoutée au tableau des résultats
                 if (this.includes(recipeDetails, userInput)) {
-                    console.log(userInput)
-                    console.log(recipes[i])
                     results.push(recipes[i]);
                 }
             };

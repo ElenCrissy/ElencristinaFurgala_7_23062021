@@ -96,9 +96,4 @@ export default class CardSection{
         noResultMessage.appendChild(document.createTextNode('Aucune recette ne correspond à votre critère... Vous pouvez chercher "tartes aux pommes", "poissons", etc...'));
         this.container.appendChild(noResultMessage);
     }
-
-    // displayNoResultMessage() {
-    //     const noResultMessage = document.querySelector('.no-result-message');
-    //     noResultMessage.style.display = 'none';
-    // }
 }

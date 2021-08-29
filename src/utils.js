@@ -1,4 +1,3 @@
-import {recipes} from '../recipes.js';
 import OptionList from './OptionList.js';
 
 export function getIngredientsList(data) {
