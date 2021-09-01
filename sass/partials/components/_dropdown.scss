@@ -15,12 +15,12 @@
         border: 3px solid;
         border-radius: 2px;
         border-color: transparent transparent white white;
-        transform: rotate(136deg);
+        transform: rotate(-46deg);
         position: absolute;
-        top: 32px;
+        top: 27px;
         right: -3px;
         &.active{
-            transform: translateY(-50%) rotate(-45deg);
+            transform: translateY(48%) rotate(136deg);
         }
     }
     &.active{

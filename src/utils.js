@@ -63,6 +63,7 @@ export function filterDropdown(dropdown) {
 export function sendOptionToTagList(dropdown, tagList) {
     dropdown.onClickOption(option => {
         tagList.createTag(option, dropdown);
+        dropdown.emptyDropdownInput(dropdown);
         return tagList;
     });
 }
