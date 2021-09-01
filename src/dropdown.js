@@ -125,4 +125,13 @@ export default class Dropdown {
     onClickOption(cb) {
         this.callback.push(cb);
     }
+
+    emptyDropdownInput(dropdown) {
+        const dropdownName = dropdown.dropdownName;
+        const dropdownDOM = document.querySelector(`.dropdown.${dropdownName}`);
+        console.log(dropdownDOM)
+
+        const dropdownInput = dropdownDOM.querySelector('input');
+        dropdownInput.value = null;
+    }
 }

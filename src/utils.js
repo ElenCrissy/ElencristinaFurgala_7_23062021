@@ -51,7 +51,6 @@ export function filterDropdown(dropdown) {
         if (inputValue.length > 2) {
             const updatedOptions = optionList.getOptions(inputValue);
             dropdown.setOptions(updatedOptions);
-            console.log('hey')
         } else if (inputValue < 2) {
             dropdown.setOptions(initialOptions);
         } 
@@ -63,6 +62,7 @@ export function filterDropdown(dropdown) {
 export function sendOptionToTagList(dropdown, tagList) {
     dropdown.onClickOption(option => {
         tagList.createTag(option, dropdown);
+        dropdown.emptyDropdownInput(dropdown);
         return tagList;
     });
 }
