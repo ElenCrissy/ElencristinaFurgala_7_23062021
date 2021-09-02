@@ -83,13 +83,13 @@ input:focus{
     bottom:-1px;
     overflow: scroll;
     max-height: 300px;
-    line-height: 30px;    
+    line-height: 30px;
+    &::-webkit-scrollbar { 
+        display:none;
+    }
     & #col{
         width: 100%;
         column-width: 100px;
-        &::-webkit-scrollbar{
-            // overflow-x: hidden;
-        }
     }
     & .option{
         padding: 3px;

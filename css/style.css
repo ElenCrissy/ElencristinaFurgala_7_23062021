@@ -94,15 +94,15 @@ figure .recipe-details {
   padding: 10px;
 }
 figure .recipe-details.recipe-title {
-  width: 62%;
+  width: 61%;
   height: 20px;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 17x;
 }
 figure .recipe-details.recipe-time {
   text-align: end;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 15px;
   display: flex;
   justify-content: flex-end;
   position: relative;
@@ -226,6 +226,9 @@ input:focus {
   overflow: scroll;
   max-height: 300px;
   line-height: 30px;
+}
+.option-list-container::-webkit-scrollbar {
+  display: none;
 }
 .option-list-container #col {
   width: 100%;
