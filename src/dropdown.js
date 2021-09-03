@@ -43,7 +43,7 @@ export default class Dropdown {
         // prevent submission
         dropdownForm.addEventListener('submit', (e) => {
             e.preventDefault();
-        })
+        });
 
         // on mouseover, keywords are displayed
         dropdownDOM.addEventListener('mouseover', () => {
@@ -100,7 +100,7 @@ export default class Dropdown {
 
     getOptions() {
         this.setOptions(this.options);
-        return this.options
+        return this.options;
     }
 
     onUserInputChange(cb) {
@@ -108,11 +108,11 @@ export default class Dropdown {
         input.addEventListener('input', (e) => {
             const inputValue = e.target.value;
             cb(inputValue);
-        })
+        });
     }
 
     setOptions(options)  {
-        const dropdownDOM = document.querySelector(`.dropdown.${this.dropdownName}`)
+        const dropdownDOM = document.querySelector(`.dropdown.${this.dropdownName}`);
         const optionListContainer = dropdownDOM.querySelector('.option-list-container');
 
         while (optionListContainer.firstChild) {

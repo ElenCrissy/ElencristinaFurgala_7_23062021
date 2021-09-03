@@ -87,26 +87,26 @@ export default class Search{
                                         const ingredientName = recipeIngredients[l].ingredient;
                                         if (this.includes(ingredientName.toLowerCase(), keywordName.toLowerCase())) {
                                             hasUserInputAndKeyword.push(hasUserInput[k]);
-                                        };
-                                    };
+                                        }
+                                    }
                                 } else if (category === 'appareils') {
                                     if (this.includes(hasUserInput[k].appliance.toLowerCase(), keywordName.toLowerCase())) {
                                         hasUserInputAndKeyword.push(hasUserInput[k]);
-                                    };
+                                    }
                                 } else if (category === 'ustensiles') {
                                     const recipeUstensils = hasUserInput[k].ustensils;
                                     for (let m = 0; m < recipeUstensils.length; m++) {
                                         if(this.includes(recipeUstensils[m].toLowerCase(), keywordName.toLowerCase())) {
                                             hasUserInputAndKeyword.push(hasUserInput[k]);
-                                        };
-                                    };
-                                };        
-                            };
+                                        }
+                                    }
+                                }        
+                            }
                             results = hasUserInputAndKeyword;
-                        };
+                        }
                     }
                 }
-            };
+            }
         }
         
         if (keywordList !== null) {
@@ -121,20 +121,20 @@ export default class Search{
                             const ingredientName = ingredient.ingredient;
                             if (ingredientName.toLowerCase().includes(keywordName.toLowerCase())) {
                                 hasKeyword.push(recipe);
-                            };
-                        })
+                            }
+                        });
                     } else if (category === 'appareils') {
                         if (recipe.appliance.toLowerCase().includes(keywordName.toLowerCase())) {
                             hasKeyword.push(recipe);
-                        };
+                        }
                     } else if (category === 'ustensiles') {
                         const recipeUstensils = recipe.ustensils;
                         recipeUstensils.forEach(ustensil => {
                             if(ustensil.toLowerCase().includes(keywordName.toLowerCase())) {
                                 hasKeyword.push(recipe);
                             }
-                        })
-                    };
+                        });
+                    }
                     results = hasKeyword;
 
                     if(userInput !== undefined && userInput.length > 2) {
@@ -163,7 +163,7 @@ export default class Search{
     }
 
     getResults() {
-        return this.results
+        return this.results;
     }
 
     // à chaque nouveau résultat, callback est ajoutée au tableau des callbacks

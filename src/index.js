@@ -35,7 +35,7 @@ window.onload = () => {
         // à chaque nouveau résultat de la recherche, liste options dropdown mise à jour
         search.onNewResults(results => {
             Utils.updateDropdownOptionListWithSearchResults(results, dropdown);
-        })
+        });
     }
 
 
@@ -51,4 +51,4 @@ window.onload = () => {
         cardSection.removePreviousCardBlock();
         cardSection.createCardBlock(results);
     });
-}
+};

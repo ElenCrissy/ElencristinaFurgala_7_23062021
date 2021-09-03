@@ -39,7 +39,7 @@ export function getLists(data) {
         ingredients : ingredientList,
         appareils : appliancesList,
         ustensiles : ustensilsList,
-    }
+    };
     return listsObj;
 }
 
@@ -51,7 +51,6 @@ export function filterDropdown(dropdown) {
         if (inputValue.length > 2) {
             const updatedOptions = optionList.getOptions(inputValue);
             dropdown.setOptions(updatedOptions);
-            console.log('hey')
         } else if (inputValue < 2) {
             dropdown.setOptions(initialOptions);
         } 
@@ -74,7 +73,7 @@ export function updateDropdownOptionListWithSearchResults(results, dropdown) {
     for (let [key, value] of Object.entries(lists)) {
         if(key === dropdown.dropdownName) {
             dropdown.setOptions(value)
-        }
+        };
     }
     
 }

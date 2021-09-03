@@ -53,7 +53,7 @@ export default class CardSection{
 
             if (unit === undefined) {
                 unit = '';
-            };
+            }
 
             if (quantity === undefined) {
                 quantity = '';
@@ -62,7 +62,7 @@ export default class CardSection{
                 const unitWords = unit.split(' ');
                 unitWord = unitWords[0];
                 content = document.createTextNode(`${ingredientName} : ${quantity} ${unitWord}`);
-            };
+            }
             
             const whitespace = document.createElement('br');
             recipeIngredients.append(content, whitespace);
