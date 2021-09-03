@@ -51,10 +51,10 @@ export default class TagList{
             this.updatedList = this.updatedList.filter(element => element.keyword !== keyword);
             this.triggerCallbacks();
 
-            return this.updatedList
+            return this.updatedList;
         });
 
-        return tag
+        return tag;
     }
 
     removeSameTag(keyword, childElement) {
@@ -67,11 +67,11 @@ export default class TagList{
             this.updatedList = this.updatedList.filter(element => element.keyword !== keyword);
             this.triggerCallbacks();
 
-            return this.updatedList
+            return this.updatedList;
         }
 
 
-        return this.updatedList
+        return this.updatedList;
     }
 
     onTagListChange(cb) {

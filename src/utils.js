@@ -39,7 +39,7 @@ export function getLists(data) {
         ingredients : ingredientList,
         appareils : appliancesList,
         ustensiles : ustensilsList,
-    }
+    };
     return listsObj;
 }
 
@@ -72,7 +72,7 @@ export function updateDropdownOptionListWithSearchResults(results, dropdown) {
     const lists = getLists(results);
     for (let [key, value] of Object.entries(lists)) {
         if(key === dropdown.dropdownName) {
-            dropdown.setOptions(value)
+            dropdown.setOptions(value);
         }
     }
     

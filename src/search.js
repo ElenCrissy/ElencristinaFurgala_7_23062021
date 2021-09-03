@@ -50,19 +50,19 @@ export default class Search{
                                         const ingredientName = ingredient.ingredient;
                                         if (ingredientName.toLowerCase().includes(keywordName.toLowerCase())) {
                                             hasUserInputAndKeyword.push(recipe);
-                                        };
-                                    })
+                                        }
+                                    });
                                 } else if (category === 'appareils') {
                                     if (recipe.appliance.toLowerCase().includes(keywordName.toLowerCase())) {
                                         hasUserInputAndKeyword.push(recipe);
-                                    };
+                                    }
                                 } else if (category === 'ustensiles') {
                                     const recipeUstensils = recipe.ustensils;
                                     recipeUstensils.forEach(ustensil => {
                                         if(ustensil.toLowerCase().includes(keywordName.toLowerCase())) {
                                             hasUserInputAndKeyword.push(recipe);
                                         }
-                                    })
+                                    });
                                 }             
                             });
                             results = hasUserInputAndKeyword;
@@ -86,20 +86,20 @@ export default class Search{
                             const ingredientName = ingredient.ingredient;
                             if (ingredientName.toLowerCase().includes(keywordName.toLowerCase())) {
                                 hasKeyword.push(recipe);
-                            };
-                        })
+                            }
+                        });
                     } else if (category === 'appareils') {
                         if (recipe.appliance.toLowerCase().includes(keywordName.toLowerCase())) {
                             hasKeyword.push(recipe);
-                        };
+                        }
                     } else if (category === 'ustensiles') {
                         const recipeUstensils = recipe.ustensils;
                         recipeUstensils.forEach(ustensil => {
                             if(ustensil.toLowerCase().includes(keywordName.toLowerCase())) {
                                 hasKeyword.push(recipe);
                             }
-                        })
-                    };
+                        });
+                    }
                     results = hasKeyword;
 
                     if(userInput !== undefined && userInput.length > 2) {
@@ -128,7 +128,7 @@ export default class Search{
     }
 
     getResults() {
-        return this.results
+        return this.results;
     }
 
     // à chaque nouveau résultat, callback est ajoutée au tableau des callbacks
@@ -193,7 +193,7 @@ export default class Search{
             if (a.counter > b.counter )
                 return -1;
             return 0;
-        })
+        });
         return recipeCounters;
     }
 
@@ -203,7 +203,7 @@ export default class Search{
         counters.forEach(counter => {
             const relevantRecipe = recipes.find(recipe => recipe.id === counter.id);
             relevantRecipes.push(relevantRecipe);
-        })
+        });
         return relevantRecipes;
     }
 }

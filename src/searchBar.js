@@ -10,7 +10,7 @@ export default class SearchBar {
         //prevent submission
         searchBarForm.addEventListener('submit', (e) => {
             e.preventDefault();
-        })
+        });
     }
 
     onUserInputChange(cb){
@@ -20,6 +20,6 @@ export default class SearchBar {
         searchBarInput.addEventListener('input', (e) => {
             const userInput = e.target.value;
             cb(userInput);
-        })        
+        });        
     }
 }

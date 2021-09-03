@@ -1,7 +1,7 @@
 import {recipes} from '../recipes.js';
 import * as Utils from './utils.js';
 import CardSection from './cardSection.js';
-import Dropdown from './dropdown.js'
+import Dropdown from './dropdown.js';
 import SearchBar from './searchBar.js';
 import TagList from './tagList.js';
 import Search from './search.js';
@@ -35,7 +35,7 @@ window.onload = () => {
         // à chaque nouveau résultat de la recherche, liste options dropdown mise à jour
         search.onNewResults(results => {
             Utils.updateDropdownOptionListWithSearchResults(results, dropdown);
-        })
+        });
     }
 
 
@@ -51,4 +51,4 @@ window.onload = () => {
         cardSection.removePreviousCardBlock();
         cardSection.createCardBlock(results);
     });
-}
+};
