@@ -48,6 +48,9 @@ export default class Search{
     searchRecipes(userInput, keywordList, recipes) {
         const noResultMessage = document.querySelector('.no-result-message');
         let results = [];
+        let hasUserInput = [];
+        let hasUserInputAndKeyword = [];
+        let hasKeyword = [];
 
         if (userInput !== undefined && userInput.length > 2) {
 
@@ -69,7 +72,39 @@ export default class Search{
 
                 // si les détails de la recette contiennent les termes recherchés alors la recette est ajoutée au tableau des résultats
                 if (this.includes(recipeDetails, userInput)) {
-                    results.push(recipes[i]);
+                    hasUserInput.push(recipes[i]);
+                    results = hasUserInput;
+
+                    if (keywordList !== null) {
+                        for (let j = 0; j < keywordList.length; j++) {
+                            const keywordName = keywordList[j].keyword;
+                            const category = keywordList[j].category;
+
+                            for (let k = 0; k < hasUserInput.length; k++) {
+                                if (category === 'ingredients') {
+                                    const recipeIngredients = hasUserInput[k].ingredients;
+                                    for (let l = 0; l < recipeIngredients.length; l++) {
+                                        const ingredientName = recipeIngredients[l].ingredient;
+                                        if (this.includes(ingredientName.toLowerCase(), keywordName.toLowerCase())) {
+                                            hasUserInputAndKeyword.push(hasUserInput[k]);
+                                        };
+                                    };
+                                } else if (category === 'appareils') {
+                                    if (this.includes(hasUserInput[k].appliance.toLowerCase(), keywordName.toLowerCase())) {
+                                        hasUserInputAndKeyword.push(hasUserInput[k]);
+                                    };
+                                } else if (category === 'ustensiles') {
+                                    const recipeUstensils = hasUserInput[k].ustensils;
+                                    for (let m = 0; m < recipeUstensils.length; m++) {
+                                        if(this.includes(recipeUstensils[m].toLowerCase(), keywordName.toLowerCase())) {
+                                            hasUserInputAndKeyword.push(hasUserInput[k]);
+                                        };
+                                    };
+                                };        
+                            };
+                            results = hasUserInputAndKeyword;
+                        };
+                    }
                 }
             };
         }
@@ -85,20 +120,30 @@ export default class Search{
                         recipeIngredients.forEach(ingredient => {
                             const ingredientName = ingredient.ingredient;
                             if (ingredientName.toLowerCase().includes(keywordName.toLowerCase())) {
-                                results.push(recipe);
+                                hasKeyword.push(recipe);
                             };
                         })
                     } else if (category === 'appareils') {
                         if (recipe.appliance.toLowerCase().includes(keywordName.toLowerCase())) {
-                            results.push(recipe);
+                            hasKeyword.push(recipe);
                         };
                     } else if (category === 'ustensiles') {
                         const recipeUstensils = recipe.ustensils;
                         recipeUstensils.forEach(ustensil => {
                             if(ustensil.toLowerCase().includes(keywordName.toLowerCase())) {
-                                results.push(recipe);
+                                hasKeyword.push(recipe);
                             }
                         })
+                    };
+                    results = hasKeyword;
+
+                    if(userInput !== undefined && userInput.length > 2) {
+                        hasKeyword.forEach(recipe => {
+                            if (recipe.name.toLowerCase().includes(userInput.toLowerCase()) || recipe.ingredients.includes(userInput.toLowerCase()) || recipe.description.toLowerCase().includes(userInput.toLowerCase())) {
+                                hasUserInputAndKeyword.push(recipe);
+                            }
+                        });
+                        results = hasUserInputAndKeyword;
                     }                
                 });
 
